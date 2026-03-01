@@ -5,4 +5,5 @@ export function t(obj, lang) {
 }
 
 export { navbar } from "./navbar"
+export {banner} from "./banner"
 
