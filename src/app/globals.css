@@ -26,6 +26,10 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.font-logo {
+  font-family: var(--font-cormorant), serif;
+}
+
 .font-heading {
   font-family: var(--font-sora), sans-serif;
 }
@@ -36,6 +40,9 @@ body {
 
 .font-bn {
   font-family: var(--font-bn), sans-serif;
+}
+.font-arabic {
+font-family: var(--font-lateef),serif;
 }
 
 :root {

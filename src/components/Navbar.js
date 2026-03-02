@@ -12,8 +12,9 @@ import { cn } from "@/lib/utils";
 import { FiSun, FiMenu, FiX } from "react-icons/fi";
 import { PiMoonStarsFill } from "react-icons/pi";
 import { TbLanguage } from "react-icons/tb";
-import { useLang } from "../context/LangContext";
-import { t, navbar } from "../data/contents/index";
+import { useLang } from "@/context/LangContext";
+import { navbar, t } from "@/data/contents";
+
 
 const LINKS = [
   { href: "/",        labelKey: "home" },
@@ -157,7 +158,7 @@ export default function Navbar() {
                 </div>
                 <Link href="/" className="select-none">
                   <span
-                    className={cn("text-xl font-bold tracking-wide", lang === "bn" ? "font-bn" : "font-heading")}
+                    className={cn("text-2xl  italic font-extrabold tracking-wide", lang === "bn" ? "font-bn" : "font-logo")}
                     style={{
                       background: "linear-gradient(135deg, #059669 0%, #10b981 40%, #f59e0b 100%)",
                       WebkitBackgroundClip: "text",

@@ -36,9 +36,8 @@ function DuaCard({ dua, lang }) {
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.15 }}
-        className="text-xl md:text-2xl lg:text-3xl font-bold leading-loose text-secondary dark:text-secondary"
+        className="text-xl md:text-2xl lg:text-3xl font-bold font-arabic leading-loose text-secondary dark:text-secondary"
         style={{
-          fontFamily: "'Amiri', 'Scheherazade New', 'Traditional Arabic', serif",
           direction: "rtl",
           textShadow: "0 0 32px rgba(245,158,11,0.2)",
         }}
@@ -127,8 +126,8 @@ export default function Banner() {
           >
             {/* Arabic */}
             <p
-              className="text-2xl md:text-4xl font-bold text-secondary"
-              style={{ fontFamily: "'Amiri', serif", direction: "rtl" }}
+              className="text-2xl font-arabic md:text-4xl font-bold text-secondary"
+             
             >
               {t(banner.arabicTitle, lang)}
             </p>
@@ -195,7 +194,7 @@ export default function Banner() {
 
               {/* Glass dua card */}
               <div
-                className="relative rounded-3xl border border-emerald-100 bg-white p-6 md:p-8 shadow-lg dark:bg-slate-900/80 dark:border-secondary/15"
+                className="relative  rounded-3xl border border-emerald-100 bg-white p-6 md:p-8 shadow-lg dark:bg-slate-900/80 dark:border-secondary/15"
                 style={{ boxShadow: "0 4px 24px rgba(5,150,105,0.08), 0 1px 8px rgba(0,0,0,0.05)" }}
               >
                 {/* Corner ornaments */}
@@ -222,11 +221,11 @@ export default function Banner() {
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-              className="text-primary/40 dark:text-secondary/40"
+              className="text-secondary-500 font-bold text-2xl dark:text-secondary-500"
             >
               ↓
             </motion.div>
-            <span className={`text-xs tracking-widest uppercase text-foreground/30 ${lang === "bn" ? "font-bn" : "font-body"}`}>
+            <span className={`text-xs tracking-widest uppercase text-white ${lang === "bn" ? "font-bn" : "font-body"}`}>
               {t(banner.scrollHint, lang)}
             </span>
           </motion.div>
