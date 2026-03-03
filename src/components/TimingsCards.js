@@ -28,7 +28,6 @@ function toBn(str) {
   return String(str).replace(/[0-9]/g, d => "০১২৩৪৫৬৭৮৯"[d]);
 }
 
-// Animated gradient border wrapper
 function AnimatedBorderCard({ children, isToday, className }) {
   return (
     <div className={cn("relative rounded-3xl p-[2px] flex-1 min-w-0", className)}
@@ -79,10 +78,8 @@ function TodayCard({ rojaNum, sehri, iftar, lang }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.1 }}
         whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: "easeOut" } }}
-        className="relative rounded-[22px] p-5 flex flex-col gap-3 overflow-hidden cursor-pointer h-full
-          bg-white dark:bg-slate-900"
+        className="relative rounded-[22px] p-5 flex flex-col gap-3 overflow-hidden cursor-pointer h-full bg-white dark:bg-slate-900"
       >
-        {/* ⭐ Star pin — top right corner */}
         <div className="absolute top-3 right-3 z-10">
           <motion.div
             animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.15, 1] }}
@@ -94,10 +91,9 @@ function TodayCard({ rojaNum, sehri, iftar, lang }) {
           </motion.div>
         </div>
 
-        {/* Header */}
         <div className="flex flex-col gap-0.5 pr-8">
           <span
-            className={cn("text-sm font-black tracking-wide", lang === "bn" ? "font-bn" : "")}
+            className={cn("text-base font-black tracking-wide", lang === "bn" ? "font-bn" : "")}
             style={{
               background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
               WebkitBackgroundClip: "text",
@@ -107,12 +103,11 @@ function TodayCard({ rojaNum, sehri, iftar, lang }) {
           >
             {t(tc.today, lang)}
           </span>
-          <span className={cn("text-xs text-gray-400", lang === "bn" ? "font-bn" : "")}>
+          <span className={cn("text-sm font-semibold text-secondary", lang === "bn" ? "font-bn" : "")}>
             {t(tc.roja, lang)} {lang === "bn" ? toBn(rojaNum) : rojaNum}
           </span>
         </div>
 
-        {/* Times */}
         <div className="flex flex-col gap-2">
           <TimeRow emoji="🌙" label={t(tc.sehri, lang)} time={sehri} accent={false} lang={lang} />
           <TimeRow emoji="🌅" label={t(tc.iftar, lang)} time={iftar} accent={true}  lang={lang} />
@@ -129,11 +124,9 @@ function TomorrowCard({ rojaNum, sehri, iftar, lang }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.2 }}
-      whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: "easeOut" } }}
-        className="relative rounded-[22px] p-5 flex flex-col gap-3 overflow-hidden cursor-pointer h-full
-          bg-white dark:bg-slate-900"
+        whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: "easeOut" } }}
+        className="relative rounded-[22px] p-5 flex flex-col gap-3 overflow-hidden cursor-pointer h-full bg-white dark:bg-slate-900"
       >
-        {/* Header */}
         <div className="flex flex-col gap-0.5">
           <span className={cn("text-sm font-black text-gray-500 dark:text-gray-400 tracking-wide", lang === "bn" ? "font-bn" : "")}>
             {t(tc.tomorrow, lang)}
@@ -143,7 +136,6 @@ function TomorrowCard({ rojaNum, sehri, iftar, lang }) {
           </span>
         </div>
 
-        {/* Times */}
         <div className="flex flex-col gap-2">
           <TimeRow emoji="🌙" label={t(tc.sehri, lang)} time={sehri} accent={false} lang={lang} />
           <TimeRow emoji="🌅" label={t(tc.iftar, lang)} time={iftar} accent={true}  lang={lang} />
@@ -184,7 +176,6 @@ export default function TimingsCards() {
 
   return (
     <>
-      {/* Animated border keyframe */}
       <style>{`
         @keyframes gradientSpin {
           0%   { background-position: 0% 50%;   }
@@ -197,6 +188,30 @@ export default function TimingsCards() {
         <div className="mx-auto max-w-2xl">
 
           {/* Section heading */}
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <motion.span
+              animate={{ rotate: 360, scale: [1, 1.2, 1] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+              className="inline-block text-xl text-amber-400 "
+            >✦</motion.span>
+            <p
+              className={cn("text-base tracking-[0.25em] uppercase font-semibold", lang === "bn" ? "font-bn" : "")}
+              style={{
+                background: "linear-gradient(135deg, #059669 0%, #10b981 50%, #f59e0b 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {t(tc.heading, lang)}
+            </p>
+            <motion.span
+              animate={{ rotate: -360, scale: [1, 1.2, 1] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+              className="inline-block text-amber-400 text-xl"
+            >✦</motion.span>
+          </div>
+
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -204,7 +219,7 @@ export default function TimingsCards() {
           >
             <div>
               <p className={cn("text-xs text-shadow-black dark:text-white font-medium mb-1 tracking-widest uppercase", lang === "bn" ? "font-bn" : "")}>
-                {lang === "bn" ? "সেহরি ও ইফতার" : "Sehri & Iftar"}
+                {t(tc.eyebrow, lang)}
               </p>
               <h2
                 className={cn("text-3xl font-black leading-tight", lang === "bn" ? "font-bn" : "font-heading")}
@@ -215,13 +230,13 @@ export default function TimingsCards() {
                   backgroundClip: "text",
                 }}
               >
-                {lang === "bn" ? "আজকের সময়সূচি" : "Today's Timings"}
+                {t(tc.section, lang)}
               </h2>
-              <p className={cn("text-bse text-secondary mt-1.5 flex items-center gap-1", lang === "bn" ? "font-bn" : "")}>
+              <p className={cn("text-base text-secondary mt-1.5 flex items-center gap-1", lang === "bn" ? "font-bn" : "")}>
                 <span>📍</span>
                 <span>{lang === "bn" ? district?.bn : district?.en}</span>
                 <span className="mx-1 text-gray-300">·</span>
-                <span>{lang === "bn" ? "রমজান ১৪৪৭" : "Ramadan 1447 AH"}</span>
+                <span>{t(tc.ramadanYear, lang)}</span>
               </p>
             </div>
             <DistrictSelector selected={districtId} onSelect={setDistrictId} />
@@ -232,7 +247,7 @@ export default function TimingsCards() {
             key={districtId}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="grid grid-cols-2 gap-3"
+            className="grid px-8 sm:px-0 grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-3"
           >
             <TodayCard
               rojaNum={todayIdx + 1}
@@ -258,7 +273,7 @@ export default function TimingsCards() {
             className="mt-5 text-center"
           >
             
-            <a  href="/timings"
+              <a href="/timings"
               className={cn(
                 "inline-flex items-center gap-1.5 text-sm font-semibold",
                 "text-primary hover:text-secondary transition-colors hover:underline underline-offset-2",

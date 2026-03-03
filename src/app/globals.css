@@ -7,16 +7,17 @@
   --color-secondary-500: #d97706;
 }
 /* dark theme */
-@variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Light mode (default) */
 :root {
   --background: #ffffff;
-  --foreground: #111827;
+  --foreground: #1c1c1d;
 }
 
 /* Dark mode */
 .dark {
-  --background: #111827;
+  --background: #1c1c1d;
   --foreground: #f1f5f9;
 }
 

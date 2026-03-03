@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   AnimatePresence,
   motion,
@@ -14,7 +14,7 @@ import { PiMoonStarsFill } from "react-icons/pi";
 import { TbLanguage } from "react-icons/tb";
 import { useLang } from "@/context/LangContext";
 import { navbar, t } from "@/data/contents";
-
+import { useTheme } from "@/context/ThemeContext";
 
 const LINKS = [
   { href: "/",        labelKey: "home" },
@@ -57,7 +57,6 @@ function StarSparkle({ className = "" }) {
   );
 }
 
-// ── Animated gradient border wrapper ──────────────────
 function AnimatedBorderPill({ children, isDark }) {
   return (
     <>
@@ -92,10 +91,10 @@ function AnimatedBorderPill({ children, isDark }) {
 }
 
 export default function Navbar() {
-  const pathname         = usePathname();
-  const { lang, toggle } = useLang();
+  const pathname          = usePathname();
+  const { lang, toggle }  = useLang();
+  const { isDark, toggleTheme } = useTheme();
   const [compact,  setCompact]  = useState(false);
-  const [isDark,   setIsDark]   = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const { scrollY } = useScroll();
@@ -105,16 +104,11 @@ export default function Navbar() {
     if (shouldCompact) setMenuOpen(false);
   });
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-  }, [isDark]);
-
   const title = t(navbar.brand, lang);
 
   return (
     <header className="sticky top-0 z-50">
 
-      {/* ── Navbar Background: visible only when NOT scrolled ── */}
       <motion.div
         animate={{
           opacity: compact ? 0 : 1,
@@ -125,7 +119,6 @@ export default function Navbar() {
         style={{ pointerEvents: "none" }}
       />
 
-      {/* ── Top gradient line ── */}
       <AnimatePresence>
         {!compact && (
           <motion.div
@@ -139,9 +132,27 @@ export default function Navbar() {
 
       <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 relative">
 
-        {/* ══ LEFT SECTION: Logo (non-compact) or spacer ══ */}
-        <div className="flex-1 flex items-center">
-          {/* Desktop Logo — hidden on scroll */}
+        {/* ══ LEFT: Hamburger (mobile) + Logo ══ */}
+        <div className="flex-1 flex items-center gap-2">
+
+          {/* Mobile hamburger — logo এর পাশে বামে */}
+          <div className="flex md:hidden">
+            <IconButton onClick={() => setMenuOpen(!menuOpen)} ariaLabel={t(navbar.openMenu, lang)}>
+              <AnimatePresence mode="wait" initial={false}>
+                {menuOpen ? (
+                  <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                    <FiX size={20} className="text-gray-800 dark:text-white" />
+                  </motion.span>
+                ) : (
+                  <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
+                    <FiMenu size={20} className="text-gray-800 dark:text-white" />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </IconButton>
+          </div>
+
+          {/* Desktop Logo */}
           <AnimatePresence initial={false}>
             {!compact && (
               <motion.div
@@ -158,7 +169,7 @@ export default function Navbar() {
                 </div>
                 <Link href="/" className="select-none">
                   <span
-                    className={cn("text-2xl  italic font-extrabold tracking-wide", lang === "bn" ? "font-bn" : "font-logo")}
+                    className={cn("text-2xl italic font-extrabold tracking-wide", lang === "bn" ? "font-bn" : "font-logo")}
                     style={{
                       background: "linear-gradient(135deg, #059669 0%, #10b981 40%, #f59e0b 100%)",
                       WebkitBackgroundClip: "text",
@@ -174,9 +185,9 @@ export default function Navbar() {
             )}
           </AnimatePresence>
 
-          {/* Mobile Logo — hidden on scroll */}
+          {/* Mobile Logo — hamburger এর পাশে */}
           <AnimatePresence initial={false}>
-            {!compact && (
+           
               <motion.div
                 key="mobile-logo"
                 initial={{ opacity: 0, x: -16 }}
@@ -188,18 +199,18 @@ export default function Navbar() {
                 <Link href="/">
                   <div className="relative flex h-9 w-9 items-center justify-center rounded-xl shadow-sm ring-1 ring-amber-300/40 bg-gradient-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30">
                     <CrescentMoon size={18} className="text-amber-500 dark:text-amber-300" />
-                    <StarSparkle className="absolute -top-1 -right-1 text-amber-400 w-2 h-2" />
+                    <StarSparkle className="absolute -top-0.5 -right-0.5 text-amber-400 w-3 h-3" />
                   </div>
                 </Link>
               </motion.div>
-            )}
+     
           </AnimatePresence>
+
         </div>
 
-        {/* ══ CENTER: Nav links (non-compact) OR Floating pill (compact) ══ */}
+        {/* ══ CENTER: Nav links / Floating pill ══ */}
         <div className="flex items-center justify-center">
 
-          {/* Normal nav links — desktop, non-compact */}
           <AnimatePresence initial={false}>
             {!compact && (
               <motion.div
@@ -250,7 +261,6 @@ export default function Navbar() {
             )}
           </AnimatePresence>
 
-          {/* ── Floating pill — */}
           <AnimatePresence>
             {compact && (
               <motion.div
@@ -259,17 +269,13 @@ export default function Navbar() {
                 animate={{ opacity: 1, scaleX: 1, scaleY: 1 }}
                 exit={{ opacity: 0, scaleX: 0.4, scaleY: 0.7 }}
                 transition={{ type: "spring", stiffness: 320, damping: 28 }}
-                className="hidden md:block origin-center "
+                className="hidden md:block origin-center"
               >
                 <AnimatedBorderPill isDark={isDark}>
-                  {/* Icon */}
-                 <div className="relative flex  h-6 w-6 items-center justify-center rounded-xl shadow-md ring-1 ring-amber-300/40 bg-gradient-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30 mr-2 flex-shrink-0">
-  <CrescentMoon size={16} className="text-amber-500 dark:text-amber-300 " />
-  <StarSparkle className="absolute -top-1 -right-1 text-amber-400 dark:text-amber-300 w-2.5 h-2.5" />
-</div>
-                
-                
-                  {/* Links */}
+                  <div className="relative flex h-6 w-6 items-center justify-center rounded-xl shadow-md ring-1 ring-amber-300/40 bg-linear-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30 mr-2 shrink-0">
+                    <CrescentMoon size={16} className="text-amber-500 dark:text-amber-300" />
+                    <StarSparkle className="absolute -top-1 -right-1 text-amber-400 dark:text-amber-300 w-2.5 h-2.5" />
+                  </div>
                   {LINKS.map((l, i) => {
                     const active = pathname === l.href;
                     const label  = t(navbar[l.labelKey], lang);
@@ -312,79 +318,37 @@ export default function Navbar() {
               </motion.div>
             )}
           </AnimatePresence>
+
         </div>
 
-        {/* ══ RIGHT: Toggles — hidden on compact/scroll ══ */}
+        {/* ══ RIGHT: Toggles  */}
         <div className="flex-1 flex items-center justify-end gap-2">
 
-          {/* Mobile hamburger — always visible */}
-          <div className="flex md:hidden">
-            <IconButton onClick={() => setMenuOpen(!menuOpen)} ariaLabel={t(navbar.openMenu, lang)}>
-              <AnimatePresence mode="wait" initial={false}>
-                {menuOpen ? (
-                  <motion.span key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <FiX size={20} className="text-gray-800 dark:text-white" />
+          <div className="flex items-center gap-2">
+            <IconButton className="bg-white/90 dark:bg-black/90" onClick={toggle} ariaLabel="Toggle language">
+              <span className="flex items-center gap-1">
+                <TbLanguage size={20} className="text-emerald-600 dark:text-emerald-400" />
+                <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 sm:inline">
+                  {t(navbar.langToggle, lang)}
+                </span>
+              </span>
+            </IconButton>
+
+            <IconButton className="bg-white/90 dark:bg-black/90 "  onClick={toggleTheme} ariaLabel="Toggle theme">
+              <AnimatePresence  mode="wait" initial={false}>
+                {isDark ? (
+                  <motion.span key="sun" initial={{ rotate: -90, scale: 0.5, opacity: 0 }} animate={{ rotate: 0, scale: 1, opacity: 1 }} exit={{ rotate: 90, scale: 0.5, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <FiSun size={20} className="text-amber-400" />
                   </motion.span>
                 ) : (
-                  <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.15 }}>
-                    <FiMenu size={20} className="text-gray-800 dark:text-white" />
+                  <motion.span key="moon" initial={{ rotate: 90, scale: 0.5, opacity: 0 }} animate={{ rotate: 0, scale: 1, opacity: 1 }} exit={{ rotate: -90, scale: 0.5, opacity: 0 }} transition={{ duration: 0.2 }}>
+                    <PiMoonStarsFill size={20} className="text-amber-500 dark:text-amber-300" />
                   </motion.span>
                 )}
               </AnimatePresence>
             </IconButton>
           </div>
 
-          {/* Language + Theme toggles — hidden when compact */}
-          <AnimatePresence initial={false}>
-            {!compact && (
-              <motion.div
-                key="toggles"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="hidden md:flex items-center gap-2"
-              >
-                {/* Language toggle */}
-                <IconButton onClick={toggle} ariaLabel="Toggle language">
-                  <span className="flex items-center gap-1">
-                    <TbLanguage size={20} className="text-emerald-600 dark:text-emerald-400" />
-                    <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 hidden sm:inline">
-                      {t(navbar.langToggle, lang)}
-                    </span>
-                  </span>
-                </IconButton>
-
-                {/* Theme toggle */}
-                <IconButton onClick={() => setIsDark((p) => !p)} ariaLabel="Toggle theme">
-                  <AnimatePresence mode="wait" initial={false}>
-                    {isDark ? (
-                      <motion.span key="sun" initial={{ rotate: -90, scale: 0.5, opacity: 0 }} animate={{ rotate: 0, scale: 1, opacity: 1 }} exit={{ rotate: 90, scale: 0.5, opacity: 0 }} transition={{ duration: 0.2 }}>
-                        <FiSun size={20} className="text-amber-400" />
-                      </motion.span>
-                    ) : (
-                      <motion.span key="moon" initial={{ rotate: 90, scale: 0.5, opacity: 0 }} animate={{ rotate: 0, scale: 1, opacity: 1 }} exit={{ rotate: -90, scale: 0.5, opacity: 0 }} transition={{ duration: 0.2 }}>
-                        <PiMoonStarsFill size={20} className="text-amber-500 dark:text-amber-300" />
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
-                </IconButton>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Mobile language + theme — always visible */}
-          <div className="flex md:hidden items-center gap-2">
-            <IconButton onClick={toggle} ariaLabel="Toggle language">
-              <TbLanguage size={18} className="text-emerald-600 dark:text-emerald-400" />
-            </IconButton>
-            <IconButton onClick={() => setIsDark((p) => !p)} ariaLabel="Toggle theme">
-              {isDark
-                ? <FiSun size={18} className="text-amber-400" />
-                : <PiMoonStarsFill size={18} className="text-amber-500 dark:text-amber-300" />
-              }
-            </IconButton>
-          </div>
         </div>
       </nav>
 
@@ -438,6 +402,7 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
     </header>
   );
 }
