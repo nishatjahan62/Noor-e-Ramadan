@@ -1,12 +1,29 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const LangContext = createContext(null);
 
 export function LangProvider({ children }) {
-  const [lang, setLang] = useState("en");
-  const toggle = () => setLang((l) => (l === "en" ? "bn" : "en"));
+  const [lang, setLang] = useState(() => {
+    if (typeof window === "undefined") return "en";
+    return localStorage.getItem("lang") || "en";
+  });
+
+  const toggle = () => {
+    setLang((prev) => {
+      const next = prev === "en" ? "bn" : "en";
+      if (typeof window !== "undefined") localStorage.setItem("lang", next);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("lang", lang);
+      document.documentElement.lang = lang; 
+    }
+  }, [lang]);
 
   return (
     <LangContext.Provider value={{ lang, toggle }}>
@@ -15,9 +32,6 @@ export function LangProvider({ children }) {
   );
 }
 
-// ── Custom hook ──────────────────────────────
-// যেকোনো component এ শুধু:
-// const { lang, toggle } = useLang();
 export function useLang() {
   const ctx = useContext(LangContext);
   if (!ctx) throw new Error("useLang must be used inside <LangProvider>");

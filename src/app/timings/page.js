@@ -78,13 +78,13 @@ function TimingColumn({ rows, startIdx, todayIdx, lang }) {
               )}
             >
               {/* Hover left glow bar */}
-              <div className="absolute left-0 top-0 bottom-0 w-0.5 rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gradient-to-b from-amber-400 to-orange-400" />
+              <div className="absolute left-0 top-0 bottom-0 w-0.5 rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-linear-to-b from-amber-400 to-orange-400" />
 
               {/* Today left bar */}
               {isToday && (
                 <motion.div
                   layoutId={`active-bar-${startIdx}`}
-                  className="absolute left-0 top-1 bottom-1 w-1 rounded-r-full bg-gradient-to-b from-amber-400 to-orange-500"
+                  className="absolute left-0 top-1 bottom-1 w-1 rounded-r-full bg-linear-to-b from-amber-400 to-orange-500"
                 />
               )}
 

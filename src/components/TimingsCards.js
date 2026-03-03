@@ -10,7 +10,7 @@ import DistrictSelector from "@/components/DistrictSelector";
 import { cn } from "@/lib/utils";
 
 const RAMADAN_START = new Date("2026-02-18T00:00:00");
-const MAGHRIB_HOUR  = 18;
+const MAGHRIB_HOUR = 18;
 
 function getTodayIdx() {
   const now = new Date();
@@ -25,12 +25,13 @@ function getTodayIdx() {
 }
 
 function toBn(str) {
-  return String(str).replace(/[0-9]/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+  return String(str).replace(/[0-9]/g, (d) => "০১২৩৪৫৬৭৮৯"[d]);
 }
 
 function AnimatedBorderCard({ children, isToday, className }) {
   return (
-    <div className={cn("relative rounded-3xl p-[2px] flex-1 min-w-0", className)}
+    <div
+      className={cn("relative rounded-3xl p-[2px] flex-1 min-w-0", className)}
       style={{
         background: isToday
           ? "linear-gradient(135deg, var(--color-primary), var(--color-secondary), var(--color-primary))"
@@ -46,38 +47,49 @@ function AnimatedBorderCard({ children, isToday, className }) {
 
 function TimeRow({ emoji, label, time, accent, lang }) {
   return (
-    <div className={cn(
-      "flex items-center justify-between rounded-2xl px-4 py-3",
-      accent ? "bg-secondary/10 dark:bg-secondary/20" : "bg-primary/5 dark:bg-primary/10"
-    )}>
+    <div
+      className={cn(
+        "flex items-center justify-between rounded-2xl px-4 py-3",
+        accent ? "bg-secondary/10 dark:bg-secondary/20" : "bg-primary/5 dark:bg-primary/10"
+      )}
+    >
       <div className="flex items-center gap-2.5">
         <span className="text-xl">{emoji}</span>
-        <span className={cn(
-          "text-xs font-semibold",
-          accent ? "text-secondary" : "text-primary",
-          lang === "bn" ? "font-bn" : ""
-        )}>
+        <span
+          className={cn(
+            "text-xs font-semibold",
+            accent ? "text-secondary" : "text-primary",
+            lang === "bn" ? "font-bn" : ""
+          )}
+        >
           {label}
         </span>
       </div>
-      <span className={cn(
-        "text-lg font-black tabular-nums tracking-tight",
-        accent ? "text-secondary" : "text-primary"
-      )}>
+      <span
+        className={cn(
+          "text-lg font-black tabular-nums tracking-tight",
+          accent ? "text-secondary" : "text-primary"
+        )}
+      >
         {lang === "bn" ? toBn(time) : time}
       </span>
     </div>
   );
 }
 
-function TodayCard({ rojaNum, sehri, iftar, lang }) {
+function TodayCard({ rojaNum, sehri, iftar, lang, index = 0 }) {
   return (
     <AnimatedBorderCard isToday={true}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.1 }}
-        whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: "easeOut" } }}
+        transition={{
+          delay: index * 0.07,
+          type: "spring",
+          stiffness: 260,
+          damping: 22,
+        }}
+        whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
         className="relative rounded-[22px] p-5 flex flex-col gap-3 overflow-hidden cursor-pointer h-full bg-white dark:bg-slate-900"
       >
         <div className="absolute top-3 right-3 z-10">
@@ -85,7 +97,9 @@ function TodayCard({ rojaNum, sehri, iftar, lang }) {
             animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.15, 1] }}
             transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
             className="flex items-center justify-center w-7 h-7 rounded-full shadow-md"
-            style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+            style={{
+              background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
+            }}
           >
             <span className="text-white text-xs">⭐</span>
           </motion.div>
@@ -110,7 +124,7 @@ function TodayCard({ rojaNum, sehri, iftar, lang }) {
 
         <div className="flex flex-col gap-2">
           <TimeRow emoji="🌙" label={t(tc.sehri, lang)} time={sehri} accent={false} lang={lang} />
-          <TimeRow emoji="🌅" label={t(tc.iftar, lang)} time={iftar} accent={true}  lang={lang} />
+          <TimeRow emoji="🌅" label={t(tc.iftar, lang)} time={iftar} accent={true} lang={lang} />
         </div>
       </motion.div>
     </AnimatedBorderCard>
@@ -123,12 +137,22 @@ function TomorrowCard({ rojaNum, sehri, iftar, lang }) {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.2 }}
-        whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: "easeOut" } }}
+        transition={{
+          delay: 0.07,
+          type: "spring",
+          stiffness: 260,
+          damping: 22,
+        }}
+        whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
         className="relative rounded-[22px] p-5 flex flex-col gap-3 overflow-hidden cursor-pointer h-full bg-white dark:bg-slate-900"
       >
         <div className="flex flex-col gap-0.5">
-          <span className={cn("text-sm font-black text-gray-500 dark:text-gray-400 tracking-wide", lang === "bn" ? "font-bn" : "")}>
+          <span
+            className={cn(
+              "text-sm font-black text-gray-500 dark:text-gray-400 tracking-wide",
+              lang === "bn" ? "font-bn" : ""
+            )}
+          >
             {t(tc.tomorrow, lang)}
           </span>
           <span className={cn("text-xs text-gray-400", lang === "bn" ? "font-bn" : "")}>
@@ -138,7 +162,7 @@ function TomorrowCard({ rojaNum, sehri, iftar, lang }) {
 
         <div className="flex flex-col gap-2">
           <TimeRow emoji="🌙" label={t(tc.sehri, lang)} time={sehri} accent={false} lang={lang} />
-          <TimeRow emoji="🌅" label={t(tc.iftar, lang)} time={iftar} accent={true}  lang={lang} />
+          <TimeRow emoji="🌅" label={t(tc.iftar, lang)} time={iftar} accent={true} lang={lang} />
         </div>
       </motion.div>
     </AnimatedBorderCard>
@@ -146,22 +170,19 @@ function TomorrowCard({ rojaNum, sehri, iftar, lang }) {
 }
 
 export default function TimingsCards() {
-  const { lang }                    = useLang();
+  const { lang } = useLang();
   const [districtId, setDistrictId] = useState("chittagong");
-  const [, forceUpdate]             = useState(0);
+  const [, forceUpdate] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => forceUpdate(n => n + 1), 60_000);
+    const id = setInterval(() => forceUpdate((n) => n + 1), 60_000);
     return () => clearInterval(id);
   }, []);
 
-  const district   = districts.find(d => d.id === districtId);
-  const allTimings = getTimingsForDistrict(
-    district?.lat ?? 22.3569,
-    district?.lng ?? 91.7832
-  );
+  const district = districts.find((d) => d.id === districtId);
+  const allTimings = getTimingsForDistrict(district?.lat ?? 22.3569, district?.lng ?? 91.7832);
 
-  const todayIdx    = getTodayIdx();
+  const todayIdx = getTodayIdx();
   const tomorrowIdx = todayIdx !== null && todayIdx + 1 < 30 ? todayIdx + 1 : null;
 
   if (todayIdx === null) {
@@ -184,18 +205,19 @@ export default function TimingsCards() {
         }
       `}</style>
 
-      <section className="py-14 px-4">
+      <section className="pt-4 lg:pt-10 px-4 sm:px-10 md:px-16 lg:px-20 px-4">
         <div className="mx-auto max-w-2xl">
-
           {/* Section heading */}
           <div className="flex items-center justify-center gap-3 mb-4">
             <motion.span
               animate={{ rotate: 360, scale: [1, 1.2, 1] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              className="inline-block text-xl text-amber-400 "
-            >✦</motion.span>
+              className="inline-block text-xl text-amber-400"
+            >
+              ✦
+            </motion.span>
             <p
-              className={cn("text-base tracking-[0.25em] uppercase font-semibold", lang === "bn" ? "font-bn" : "")}
+              className={cn("text-lg tracking-[0.25em] uppercase font-semibold", lang === "bn" ? "font-bn tracking-normal" : "")}
               style={{
                 background: "linear-gradient(135deg, #059669 0%, #10b981 50%, #f59e0b 100%)",
                 WebkitBackgroundClip: "text",
@@ -209,7 +231,9 @@ export default function TimingsCards() {
               animate={{ rotate: -360, scale: [1, 1.2, 1] }}
               transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
               className="inline-block text-amber-400 text-xl"
-            >✦</motion.span>
+            >
+              ✦
+            </motion.span>
           </div>
 
           <motion.div
@@ -218,7 +242,12 @@ export default function TimingsCards() {
             className="mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
           >
             <div>
-              <p className={cn("text-xs text-shadow-black dark:text-white font-medium mb-1 tracking-widest uppercase", lang === "bn" ? "font-bn" : "")}>
+              <p
+                className={cn(
+                  "text-xs text-shadow-black dark:text-white font-medium mb-1 tracking-widest uppercase",
+                  lang === "bn" ? "font-bn" : ""
+                )}
+              >
                 {t(tc.eyebrow, lang)}
               </p>
               <h2
@@ -272,8 +301,8 @@ export default function TimingsCards() {
             transition={{ delay: 0.4 }}
             className="mt-5 text-center"
           >
-            
-              <a href="/timings"
+            <a
+              href="/timings"
               className={cn(
                 "inline-flex items-center gap-1.5 text-sm font-semibold",
                 "text-primary hover:text-secondary transition-colors hover:underline underline-offset-2",
@@ -283,7 +312,6 @@ export default function TimingsCards() {
               {t(tc.viewAll, lang)} →
             </a>
           </motion.div>
-
         </div>
       </section>
     </>
