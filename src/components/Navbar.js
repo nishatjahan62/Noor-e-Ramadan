@@ -17,9 +17,10 @@ import { navbar, t } from "@/data/contents";
 import { useTheme } from "@/context/ThemeContext";
 
 const LINKS = [
-  { href: "/",        labelKey: "home" },
-  { href: "/recipes", labelKey: "recipes" },
-  { href: "/timings", labelKey: "schedule" },
+  { href: "/",        labelKey: "home"        },
+  { href: "/recipes", labelKey: "recipes"     },
+  { href: "/timings", labelKey: "schedule"    },
+  { href: "/duas",    labelKey: "duas"        },
 ];
 
 function IconButton({ children, onClick, ariaLabel, className = "" }) {
@@ -91,8 +92,8 @@ function AnimatedBorderPill({ children, isDark }) {
 }
 
 export default function Navbar() {
-  const pathname          = usePathname();
-  const { lang, toggle }  = useLang();
+  const pathname                = usePathname();
+  const { lang, toggle }        = useLang();
   const { isDark, toggleTheme } = useTheme();
   const [compact,  setCompact]  = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -109,14 +110,18 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50">
 
+      {/* Desktop bg — hides on compact */}
       <motion.div
-        animate={{
-          opacity: compact ? 0 : 1,
-          backdropFilter: compact ? "blur(0px)" : "blur(16px)",
-        }}
+        animate={{ opacity: compact ? 0 : 1 }}
         transition={{ duration: 0.4 }}
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-emerald-50/90 via-white/80 to-amber-50/90 dark:from-slate-950/90 dark:via-slate-900/80 dark:to-slate-950/90"
-        style={{ pointerEvents: "none" }}
+        className="absolute inset-0 -z-10 hidden md:block bg-gradient-to-r from-emerald-50/90 via-white/80 to-amber-50/90 dark:from-slate-950/90 dark:via-slate-900/80 dark:to-slate-950/90"
+        style={{ backdropFilter: "blur(16px)", pointerEvents: "none" }}
+      />
+
+      {/* Mobile bg — always visible */}
+      <div
+        className="absolute inset-0 -z-10 md:hidden bg-gradient-to-r from-emerald-50/95 via-white/90 to-amber-50/95 dark:from-slate-950/95 dark:via-slate-900/90 dark:to-slate-950/95"
+        style={{ backdropFilter: "blur(16px)" }}
       />
 
       <AnimatePresence>
@@ -132,10 +137,10 @@ export default function Navbar() {
 
       <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 relative">
 
-        {/* ══ LEFT: Hamburger (mobile) + Logo ══ */}
+        {/* LEFT */}
         <div className="flex-1 flex items-center gap-2">
 
-          {/* Mobile hamburger — logo এর পাশে বামে */}
+          {/* Mobile hamburger */}
           <div className="flex md:hidden">
             <IconButton onClick={() => setMenuOpen(!menuOpen)} ariaLabel={t(navbar.openMenu, lang)}>
               <AnimatePresence mode="wait" initial={false}>
@@ -152,7 +157,7 @@ export default function Navbar() {
             </IconButton>
           </div>
 
-          {/* Desktop Logo */}
+          {/* Desktop logo — hides on compact */}
           <AnimatePresence initial={false}>
             {!compact && (
               <motion.div
@@ -185,32 +190,22 @@ export default function Navbar() {
             )}
           </AnimatePresence>
 
-          {/* Mobile Logo — hamburger এর পাশে */}
-          <AnimatePresence initial={false}>
-           
-              <motion.div
-                key="mobile-logo"
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="flex md:hidden items-center"
-              >
-                <Link href="/">
-                  <div className="relative flex h-9 w-9 items-center justify-center rounded-xl shadow-sm ring-1 ring-amber-300/40 bg-gradient-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30">
-                    <CrescentMoon size={18} className="text-amber-500 dark:text-amber-300" />
-                    <StarSparkle className="absolute -top-0.5 -right-0.5 text-amber-400 w-3 h-3" />
-                  </div>
-                </Link>
-              </motion.div>
-     
-          </AnimatePresence>
+          {/* Mobile logo — always visible */}
+          <div className="flex md:hidden items-center">
+            <Link href="/">
+              <div className="relative flex h-9 w-9 items-center justify-center rounded-xl shadow-sm ring-1 ring-amber-300/40 bg-gradient-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30">
+                <CrescentMoon size={18} className="text-amber-500 dark:text-amber-300" />
+                <StarSparkle className="absolute -top-0.5 -right-0.5 text-amber-400 w-3 h-3" />
+              </div>
+            </Link>
+          </div>
 
         </div>
 
-        {/* ══ CENTER: Nav links / Floating pill ══ */}
+        {/* CENTER */}
         <div className="flex items-center justify-center">
 
+          {/* Desktop links — normal */}
           <AnimatePresence initial={false}>
             {!compact && (
               <motion.div
@@ -261,6 +256,7 @@ export default function Navbar() {
             )}
           </AnimatePresence>
 
+          {/* Desktop compact pill */}
           <AnimatePresence>
             {compact && (
               <motion.div
@@ -272,7 +268,7 @@ export default function Navbar() {
                 className="hidden md:block origin-center"
               >
                 <AnimatedBorderPill isDark={isDark}>
-                  <div className="relative flex h-6 w-6 items-center justify-center rounded-xl shadow-md ring-1 ring-amber-300/40 bg-linear-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30 mr-2 shrink-0">
+                  <div className="relative flex h-6 w-6 items-center justify-center rounded-xl shadow-md ring-1 ring-amber-300/40 bg-gradient-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30 mr-2 shrink-0">
                     <CrescentMoon size={16} className="text-amber-500 dark:text-amber-300" />
                     <StarSparkle className="absolute -top-1 -right-1 text-amber-400 dark:text-amber-300 w-2.5 h-2.5" />
                   </div>
@@ -291,7 +287,7 @@ export default function Navbar() {
                         <Link
                           href={l.href}
                           className={cn(
-                            "relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-200",
+                            "relative rounded-full px-3 py-1.5 text-xs font-medium transition-colors duration-200",
                             lang === "bn" ? "font-bn" : "font-body",
                             active
                               ? "text-amber-600 dark:text-amber-400"
@@ -321,9 +317,8 @@ export default function Navbar() {
 
         </div>
 
-        {/* ══ RIGHT: Toggles  */}
+        {/* RIGHT */}
         <div className="flex-1 flex items-center justify-end gap-2">
-
           <div className="flex items-center gap-2">
             <IconButton className="bg-white/90 dark:bg-black/90" onClick={toggle} ariaLabel="Toggle language">
               <span className="flex items-center gap-1">
@@ -334,8 +329,8 @@ export default function Navbar() {
               </span>
             </IconButton>
 
-            <IconButton className="bg-white/90 dark:bg-black/90 "  onClick={toggleTheme} ariaLabel="Toggle theme">
-              <AnimatePresence  mode="wait" initial={false}>
+            <IconButton className="bg-white/90 dark:bg-black/90" onClick={toggleTheme} ariaLabel="Toggle theme">
+              <AnimatePresence mode="wait" initial={false}>
                 {isDark ? (
                   <motion.span key="sun" initial={{ rotate: -90, scale: 0.5, opacity: 0 }} animate={{ rotate: 0, scale: 1, opacity: 1 }} exit={{ rotate: 90, scale: 0.5, opacity: 0 }} transition={{ duration: 0.2 }}>
                     <FiSun size={20} className="text-amber-400" />
@@ -348,15 +343,17 @@ export default function Navbar() {
               </AnimatePresence>
             </IconButton>
           </div>
-
         </div>
+
       </nav>
 
-      {/* ══ MOBILE DROPDOWN ══ */}
+      {/* MOBILE DROPDOWN */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22, ease: "easeInOut" }}
             className="md:hidden overflow-hidden"
           >

@@ -1,6 +1,14 @@
-export const duas = {
-  // ইফতারের দোয়া
-  iftar: {
+export const bannerDuas = [
+  {
+    id: "sehri",
+    title: "রোজার নিয়ত",
+    titleEn: "Niyat for Roza",
+    arabic: "نَوَيْتُ أَنْ أَصُومَ صَوْمَ شَهْرِ رَمَضَانَ مِنَ الْفَجْرِ إِلَى الْمَغْرِبِ خَالِصًا لِوَجْهِ اللَّهِ تَعَالَى",
+    pronunciation: "নাওয়াইতু আন আসুমা সাওমা শাহরি রামাদানা মিনাল ফাজরি ইলাল মাগরিবি খালিসান লিওয়াজহিল্লাহি তাআলা",
+    meaning: "আমি আল্লাহ তাআলার সন্তুষ্টির জন্য ফজর থেকে মাগরিব পর্যন্ত রমজান মাসের রোজা রাখার নিয়ত করলাম।",
+    source: "ফিকহ",
+  },
+  {
     id: "iftar",
     title: "ইফতারের দোয়া",
     titleEn: "Dua for Iftar",
@@ -9,45 +17,152 @@ export const duas = {
     meaning: "হে আল্লাহ! আমি তোমার জন্যই রোজা রেখেছি এবং তোমার দেওয়া রিজিক দ্বারা ইফতার করছি।",
     source: "আবু দাউদ",
   },
+];
 
-  // রোজার নিয়ত (সেহরির নিয়ত)
-  sehri: {
-    id: "sehri",
-    title: "রোজার নিয়ত",
-    titleEn: "Niyat for Roza",
-    arabic: "نَوَيْتُ أَنْ أَصُومَ صَوْمَ شَهْرِ رَمَضَانَ مِنَ الْفَجْرِ إِلَى الْمَغْرِبِ خَالِصًا لِوَجْهِ اللَّهِ تَعَالَى",
-    pronunciation:
-      "নাওয়াইতু আন আসুমা সাওমা শাহরি রামাদানা মিনাল ফাজরি ইলাল মাগরিবি খালিসান লিওয়াজহিল্লাহি তাআলা",
-    meaning:
-      "আমি আল্লাহ তাআলার সন্তুষ্টির জন্য ফজর থেকে মাগরিব পর্যন্ত রমজান মাসের রোজা রাখার নিয়ত করলাম।",
-    source: "ফিকহ",
+export const duas = [
+  {
+    id: "du01",
+    category: "mercy",
+    title: { en: "The Period of Mercy", bn: "রহমতের দশক" },
+    subtitle: { en: "Days and nights filled with Allah's mercy", bn: "আল্লাহর রহমতে ভরপুর দিন-রাত" },
+    arabic: "رَبِّ اغْفِرْ وَ ارْحَمْ وَ اَنْتَ خَیْرُ الرّٰحِمِیْنَ",
+    translation: {
+      en: "O my Lord! Forgive and have mercy, and You are the Best of the Merciful.",
+      bn: "হে আমার রব! ক্ষমা করুন এবং দয়া করুন, আপনিই সর্বোত্তম দয়ালু।",
+    },
+    reference: { en: "Quran 23:118", bn: "কুরআন ২৩:১১৮" },
+    featured: true,
+  },
+  {
+    id: "du02",
+    category: "forgiveness",
+    title: { en: "The Period of Forgiveness", bn: "মাগফিরাতের দশক" },
+    subtitle: { en: "Days for the forgiveness of sins", bn: "গুনাহ মাফের বিশেষ দিনসমূহ" },
+    arabic: "اَسْتَغْفِرُاللّٰہَ رَبِّیْ مِنْ کُلِّ ذَنْبٍ وَ اَتُوْبُ اِلَیْہِ",
+    translation: {
+      en: "I seek forgiveness from Allah, my Lord, for every sin, and I turn towards Him in repentance.",
+      bn: "আমি আমার রব আল্লাহর কাছে প্রতিটি গুনাহ থেকে ক্ষমা চাই এবং তাঁর দিকেই তওবা করি।",
+    },
+    reference: { en: "Tirmidhi", bn: "তিরমিযী" },
+    featured: true,
+  },
+  {
+    id: "du03",
+    category: "freedom",
+    title: { en: "Freedom from Hellfire", bn: "নাজাতের দশক" },
+    subtitle: { en: "A blessed opportunity to attain deliverance from the Fire", bn: "জাহান্নাম থেকে মুক্তির সুবর্ণ সুযোগ" },
+    arabic: "اَللّٰھُمَّ اِنَّکَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنَّا",
+    translation: {
+      en: "Ya Allah! You are indeed the Forgiver and the Benevolent, You love forgiving, so forgive us.",
+      bn: "হে আল্লাহ! আপনি ক্ষমাশীল ও দয়ালু। আপনি ক্ষমা করতে ভালোবাসেন, তাই আমাদের ক্ষমা করুন।",
+    },
+    reference: { en: "Tirmidhi", bn: "তিরমিযী" },
+    featured: true,
+  },
+  {
+    id: "du04",
+    category: "iftar",
+    title: { en: "Dua for Breaking the Fast", bn: "ইফতারের দুআ" },
+    subtitle: { en: "Recite at the time of breaking the fast", bn: "ইফতারের সময় পড়ার দুআ" },
+    arabic: "اَلّهُمَّ لَكَ صُـمْـةُ وَعَلــي رِزْقـِكَ اَفْــطَرْتُ بِـرَحْمَـتِـكَ يَا اَرْحَمَ الرَّحِـمِيْـنَ",
+    translation: {
+      en: "O Allah! For You I have fasted and upon Your provision I break my fast, by Your mercy, O Most Merciful.",
+      bn: "হে আল্লাহ! আপনারই জন্য রোজা রেখেছি এবং আপনার দেওয়া রিযিক দিয়ে ইফতার করছি, আপনার রহমতে, হে সর্বাধিক দয়ালু।",
+    },
+    reference: { en: "Abu Dawud", bn: "আবু দাউদ" },
+    featured: false,
+  },
+  {
+    id: "du05",
+    category: "sehri",
+    title: { en: "Niyyah for Sehri", bn: "সেহরির নিয়ত" },
+    subtitle: { en: "Intention and dua before the fast begins", bn: "রোজা শুরুর আগের নিয়ত ও দুআ" },
+    arabic: "نَوَيْتُ اَنْ اَصُوُمَ غَدًا مِنْ شَهْرِ رَمَضَانَ الْمُبَارَكِ فَرَضًا لَّكَ يَااَللهُ فَتَقَبَّلْ مِنِّىْ اِنَّكَ اّنْتَ السَّمِيْعُ الْعَلِيْمُ",
+    translation: {
+      en: "I intend to fast tomorrow in the blessed month of Ramadan, as an obligation for You, O Allah. Accept it from me, You are the All-Hearing, All-Knowing.",
+      bn: "আমি আগামীকাল রমজানের মোবারক মাসে আপনার জন্য ফরজ রোজা রাখার নিয়ত করছি। হে আল্লাহ, আমার পক্ষ থেকে কবুল করুন, আপনি সর্বশ্রোতা, সর্বজ্ঞ।",
+    },
+    reference: { en: "Islamic Tradition", bn: "ইসলামি পরম্পরা" },
+    featured: false,
+  },
+  {
+    id: "du06",
+    category: "lailatul",
+    title: { en: "Dua for Lailatul Qadr", bn: "লাইলাতুল কদরের দুআ" },
+    subtitle: { en: "The most powerful dua for the Night of Power", bn: "হাজার মাসের শ্রেষ্ঠ রাতের বিশেষ দুআ" },
+    arabic: "اللَّــهُـمَّ إِنَّـكَ عَـفُوٌّ تُــحِبُّ الْعَــفْوَ فَاعْـفُ عَــنِّي",
+    translation: {
+      en: "O Allah! You are the Pardoner, You love to pardon, so pardon me.",
+      bn: "হে আল্লাহ! আপনি ক্ষমাশীল, আপনি ক্ষমা করতে ভালোবাসেন, তাই আমাকে ক্ষমা করুন।",
+    },
+    reference: { en: "Tirmidhi", bn: "তিরমিযী" },
+    featured: false,
+  },
+  {
+    id: "du07",
+    category: "tarawih",
+    title: { en: "Dua after Every 4 Rakats of Tarawih", bn: "তারাবির প্রতি ৪ রাকাতের পর দুআ" },
+    subtitle: { en: "Recited after every 4 rakats during Tarawih prayer", bn: "তারাবি নামাজে প্রতি ৪ রাকাতের বিরতিতে পঠিত দুআ" },
+    arabic: "سُبْحَانَ ذِي الْمُلْكِ وَالْمَلكُوتِ- سُبْحَانَ ذِي الْعِزَّةِ وَالْعَظْمَةِ وَالْهَيْبَةِ وَالْقُدْرَةِ وَالْكِبْرِيَاءِ وَالْجَبَرُوتِ- سُبْحَانَ الْمَلِكِ الْحَيِّ الَّذِي لا يَنَامُ وَلَا يَمُوتُ سُبُّوُحٌ قُدُّوُسٌ رَبُّنَا وَرَبُّ الْمَليِكَةِ وَالرُّوحِ",
+    translation: {
+      en: "Glory be to the Owner of dominion and sovereignty. Glory be to the Owner of might, greatness, awe, power, pride and majesty. Glory be to the Ever-Living King who never sleeps and never dies. Most Holy, Most Pure, our Lord and the Lord of the angels and the Spirit.",
+      bn: "পবিত্র তিনি যিনি রাজত্ব ও সাম্রাজ্যের মালিক। পবিত্র তিনি যিনি মর্যাদা, মহত্ত্ব, ভয়, ক্ষমতা, গর্ব ও শক্তির অধিকারী। পবিত্র সেই চিরজীবী বাদশাহ যিনি ঘুমান না এবং মরেন না। অতি পবিত্র, অতি পরিচ্ছন্ন, আমাদের রব এবং ফেরেশতাদের ও রূহের রব।",
+    },
+    reference: { en: "Tarawih Tradition", bn: "তারাবির রীতি" },
+    featured: false,
+  },
+  {
+    id: "du08",
+    category: "tarawih_munajat",
+    title: { en: "Tarawih Munajat", bn: "তারাবির মুনাজাত" },
+    subtitle: { en: "The complete munajat recited during Tarawih", bn: "তারাবি নামাজে পঠিত পূর্ণ মুনাজাত" },
+    arabic: "اَللَهُمَّ اِنَّا نَسْئَالُكَ الْجَنَّةَ وَ نَعُوْذُبِكَ مِنَ النَّارِ يَا خَالِقَ الْجَنَّةَ وَالنَّارِ- بِرَحْمَتِكَ يَاعَزِيْزُ يَا غَفَّارُ يَا كَرِيْمُ يَا سَتَّارُ يَا رَحِيْمُ يَاجَبَّارُ يَاخَالِقُ يَابَارُّ - اللهُمَّ أَجِرْنَا وَخَلِّسْنَ مِنَ النَّارِ يَا مُجِيرُ يَا مُجِيرُ يَا مُجِيرُ بِـرَحْمَـتِـكَ يَا اَرْحَمَ الرَّحِـمِيْـنَ",
+    translation: {
+      en: "O Allah! We ask You for Paradise and seek refuge in You from the Fire, O Creator of Paradise and Hell. By Your mercy, O Mighty, O Forgiving, O Generous, O Concealer, O Merciful, O Compeller, O Creator, O Righteous. O Allah, save us and free us from the Fire, O Protector, O Protector, O Protector, by Your mercy, O Most Merciful.",
+      bn: "হে আল্লাহ! আমরা আপনার কাছে জান্নাত চাই এবং জাহান্নাম থেকে আশ্রয় চাই, হে জান্নাত ও জাহান্নামের স্রষ্টা। আপনার রহমতে, হে পরাক্রমশালী, হে ক্ষমাকারী, হে দানশীল, হে পর্দাদানকারী, হে দয়ালু, হে শক্তিশালী, হে স্রষ্টা, হে কল্যাণময়। হে আল্লাহ, আমাদের জাহান্নাম থেকে মুক্তি দিন, হে রক্ষাকারী, হে রক্ষাকারী, হে রক্ষাকারী, আপনার রহমতে হে সর্বাধিক দয়ালু।",
+    },
+    reference: { en: "Tarawih Tradition", bn: "তারাবির রীতি" },
+    featured: false,
+  },
+  {
+    id: "du09",
+    category: "jumuah",
+    title: { en: "Dua for Friday (Jumu'ah)", bn: "জুমার দিনের দুআ" },
+    subtitle: { en: "Special dua for the blessed day of Jumu'ah in Ramadan", bn: "রমজানের জুমার দিনের বিশেষ দুআ" },
+    arabic: "اللَّهُمَّ اجْعَلْنِي مِنْ أَهْلِ الجَنَّةِ - اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ - رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ",
+    translation: {
+      en: "O Allah, make me among the people of Paradise. O Allah, I ask You for pardon and well-being. Our Lord, forgive me, my parents, and the believers.",
+      bn: "হে আল্লাহ, আমাকে জান্নাতবাসীদের অন্তর্ভুক্ত করুন। হে আল্লাহ, আমি আপনার কাছে ক্ষমা ও সুস্থতা চাই। হে আমাদের রব, আমাকে, আমার পিতামাতাকে এবং সকল মুমিনদের ক্ষমা করুন।",
+    },
+    reference: { en: "Quran & Hadith", bn: "কুরআন ও হাদিস" },
+    featured: false,
   },
 
-  // ইফতারের সময় দোয়া (বিকল্প)
-  iftarExtra: {
-    id: "iftarExtra",
-    title: "ইফতারের পর দোয়া",
-    titleEn: "Dua after Iftar",
-    arabic: "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ",
-    pronunciation:
-      "যাহাবায যামাউ ওয়াবতাল্লাতিল উরুকু ওয়া সাবাতাল আজরু ইনশাআল্লাহ",
-    meaning:
-      "পিপাসা দূর হলো, শিরা-উপশিরা সিক্ত হলো এবং ইনশাআল্লাহ সওয়াব নিশ্চিত হলো।",
-    source: "আবু দাউদ",
+  {
+    id: "du10",
+    category: "protection",
+    title: { en: "Dua for Protection from Harm", bn: "ক্ষতি থেকে সুরক্ষার দুআ" },
+    subtitle: { en: "Seek Allah's protection from all harm", bn: "সকল ক্ষতি থেকে আল্লাহর কাছে আশ্রয় প্রার্থনার দুআ" },
+    arabic: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ",
+    translation: {
+      en: "In the name of Allah, with Whose name nothing on earth or in the heavens can cause harm, and He is the All-Hearing, All-Knowing.",
+      bn: "আল্লাহর নামে, যার নামের সাথে আসমান ও জমিনে কোনো কিছুই ক্ষতি করতে পারে না, এবং তিনি সর্বশ্রোতা, সর্বজ্ঞ।",
+    },
+    reference: { en: "Abu Dawud & Tirmidhi", bn: "আবু দাউদ ও তিরমিযী" },
+    featured: false,
   },
-
-  // তারাবির নিয়ত
-  taraweeh: {
-    id: "taraweeh",
-    title: "তারাবির নিয়ত",
-    titleEn: "Niyat for Taraweeh",
-    arabic: "نَوَيْتُ أَنْ أُصَلِّيَ رَكْعَتَيِ التَّرَاوِيحِ سُنَّةً لِلَّهِ تَعَالَى",
-    pronunciation:
-      "নাওয়াইতু আন উসাল্লিয়া রাকাআতাইত তারাওয়ীহি সুন্নাতান লিল্লাহি তাআলা",
-    meaning: "আমি আল্লাহ তাআলার জন্য দুই রাকাত তারাবির সুন্নত নামাজের নিয়ত করলাম।",
-    source: "ফিকহ",
+  {
+    id: "du11",
+    category: "forgiveness2",
+    title: { en: "Dua for Complete Forgiveness", bn: "পূর্ণ মাগফিরাতের দুআ" },
+    subtitle: { en: "Ask Allah for complete forgiveness of all sins", bn: "সকল গুনাহ থেকে পূর্ণ মাফ পাওয়ার দুআ" },
+    arabic: "اللَّــهُـمَّ إِنِّي أَسْأَلُكَ الْعَــفْوَ وَالْعَـافِــيَةَ فِـــي الدُّنْـيَا وَالْآخِـرَةِ",
+    translation: {
+      en: "O Allah! I ask You for pardon and well-being in this world and the Hereafter.",
+      bn: "হে আল্লাহ! আমি আপনার কাছে দুনিয়া ও আখিরাতে ক্ষমা এবং সুস্থতা প্রার্থনা করছি।",
+    },
+    reference: { en: "Ibn Majah", bn: "ইবনে মাজাহ" },
+    featured: false,
   },
-};
-
-// Banner এ যে দুটো দোয়া animate হবে
-export const bannerDuas = [duas.sehri, duas.iftar];
+ 
+];

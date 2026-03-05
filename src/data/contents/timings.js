@@ -30,4 +30,19 @@ ramadanYear2: { en: "Ramadan 1447 AH · February — March 2026", bn: "রমজ
 scheduleTitle: { en: "Sehri & Iftar Schedule", bn: "সেহরি ও ইফতারের সময়সূচি" },
 completeSchedule: { en: "Complete Ramadan Schedule", bn: "সম্পূর্ণ রমজানের সময়সূচি" },
 thirtyDays: { en: "30 days Sehri & Iftar timings", bn: "৩০ রোজার সেহরি ও ইফতারের সময়" },
+namaz:        { en: "Namaz Timings",          bn: "নামাজের সময়সূচি"        },
+fajr:         { en: "Fajr",                   bn: "ফজর"                    },
+dhuhr:        { en: "Dhuhr",                  bn: "যোহর"                   },
+asr:          { en: "Asr",                    bn: "আসর"                    },
+maghrib:      { en: "Maghrib",                bn: "মাগরিব"                 },
+isha:         { en: "Isha",                   bn: "ইশা"                    },
+viewAllNamaz: { en: "View Full Namaz Schedule", bn: "পূর্ণ নামাজের সময়সূচি দেখুন" },
+
+// /namaz page
+namazPageTitle:    { en: "Namaz Timings",                       bn: "নামাজের সময়সূচি"                    },
+namazPageSubtitle: { en: "Daily prayer times for all districts", bn: "সকল জেলার দৈনিক নামাজের সময়সূচি"  },
+namazEyebrow:      { en: "5 Daily Prayers",                     bn: "পাঁচ ওয়াক্ত নামাজ"                 },
+namazHeading:      { en: "Prayer Times",                        bn: "নামাজের সময়"                        },
+namazDisclaimer:   { en: "Times are approximate. Verify with local mosque.", bn: "সময়গুলো আনুমানিক। স্থানীয় মসজিদে যাচাই করুন।" },
+namazRamadanNote:  { en: "Fajr = Sehri end time · Maghrib = Iftar time", bn: "ফজর = সেহরির শেষ সময় · মাগরিব = ইফতারের সময়" },
 };

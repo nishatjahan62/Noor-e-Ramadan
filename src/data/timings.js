@@ -11,7 +11,8 @@ function formatTime(date) {
   });
 }
 
-// Returns 30 days of sehri & iftar for given coordinates
+// Returns 30 days of sehri & iftar and salah timing for given coordinates
+
 export function getTimingsForDistrict(lat, lng) {
   const coordinates = new Coordinates(lat, lng);
   const params      = CalculationMethod.MuslimWorldLeague();
@@ -22,8 +23,13 @@ export function getTimingsForDistrict(lat, lng) {
     date.setDate(date.getDate() + i);
     const times = new PrayerTimes(coordinates, date, params);
     return {
-      sehri: formatTime(times.fajr),
-      iftar: formatTime(times.maghrib),
+      sehri:   formatTime(times.fajr),
+      iftar:   formatTime(times.maghrib),
+      fajr:    formatTime(times.fajr),
+      dhuhr:   formatTime(times.dhuhr),
+      asr:     formatTime(times.asr),
+      maghrib: formatTime(times.maghrib),
+      isha:    formatTime(times.isha),
     };
   });
 }
