@@ -3,6 +3,7 @@ import HeoBanner from "../components/HeroBanner"
 import TimingsCards from "@/components/TimingsCards";
 import RecipesSection from "@/components/RecipeSection";
 import DuasSection from "@/components/DuasSection";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
     <TimingsCards></TimingsCards>
     <DuasSection></DuasSection>
     <RecipesSection></RecipesSection>
+    <Footer></Footer>
   </main>
   );
 }

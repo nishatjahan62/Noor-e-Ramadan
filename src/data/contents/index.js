@@ -8,3 +8,4 @@ export { banner } from "./banner";
 export { timings } from "./timings";
 export { recipes } from "./recipes";
 export { duas } from "./duas";
+export {footer} from "./footer"
