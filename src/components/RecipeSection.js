@@ -54,7 +54,13 @@ export default function RecipesSection() {
 
 
   {/* Subheading */}
-  <p className={cn("text-sm text-gray-500 dark:text-gray-400 max-w-sm", lang === "bn" ? "font-bn" : "")}>
+  <p  className="text-xs font-semibold italic"
+                style={{
+                  background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>
     {t(rc.mainSubheading, lang)}
   </p>
     {/* Bottom ornament */}
@@ -67,24 +73,29 @@ export default function RecipesSection() {
           </div>
 </motion.div> {/* Animated label */}
         
+         
           {/* Main heading */}
-          {/* Main heading */}
-<h2
-   className={cn("text-3xl font-black leading-tight", lang === "bn" ? "font-bn" : "font-heading")}
-                style={{
-                  background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 20%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
->
-  {t(rc.heading, lang)}
-</h2>
 
-          {/* Subheading */}
-          <p className={cn("text-sm text-gray-500 dark:text-gray-400 max-w-sm pb-4", lang === "bn" ? "font-bn" : "")}>
-            {t(rc.subheading, lang)}
-          </p>
+  {/* Main heading */}
+<div className="flex flex-col items-center lg:items-start gap-1.5">
+  <h2
+    className={cn("text-3xl font-black leading-tight text-center lg:text-left", lang === "bn" ? "font-bn" : "font-heading")}
+    style={{
+      background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
+      WebkitBackgroundClip: "text",
+      WebkitTextFillColor: "transparent",
+      backgroundClip: "text",
+    }}
+  >
+    {t(rc.heading, lang)}
+  </h2>
+</div>
+
+{/* Subheading */}
+<p className={cn("text-sm text-gray-500 dark:text-gray-400 max-w-sm pb-4 text-center lg:text-left", lang === "bn" ? "font-bn" : "")}>
+  {t(rc.subheading, lang)}
+</p>
+
 
   
         {/* Cards grid — desktop এ বড় */}

@@ -340,7 +340,7 @@ export default function TimingsCards() {
               className="inline-block text-xl text-amber-400"
             >✦</motion.span>
             <p
-              className={cn("text-lg tracking-[0.25em] uppercase font-semibold", lang === "bn" ? "font-bn tracking-normal" : "")}
+              className={cn("text-lg tracking-[0.25em] uppercase text-center font-semibold", lang === "bn" ? "font-bn tracking-normal" : "")}
               style={{
                 background: "linear-gradient(135deg, #059669 0%, #10b981 50%, #f59e0b 100%)",
                 WebkitBackgroundClip: "text",
@@ -361,7 +361,7 @@ export default function TimingsCards() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 grid grid-cols-1 sm:grid-cols-3 items-center gap-4"
+            className="mb-8 grid grid-cols-1 lg:grid-cols-3 items-center gap-4"
           >
             <div className="text-center lg:text-left">
               <p className={cn("text-xs dark:text-white font-medium mb-1 tracking-widest uppercase ", lang === "bn" ? "font-bn" : "")}>

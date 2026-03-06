@@ -13,10 +13,10 @@ export default function DuasSection() {
   const { lang } = useLang();
 
   return (
-    <section className="py-14 px-4">
+    <section className="pt-8 lg:pt-20 px-4">
       <div className="mx-auto max-w-5xl">
 
-        {/* Heading — desktop: left+right split | mobile: center */}
+        {/* Heading — desktop:  */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ export default function DuasSection() {
             </div>
 
           {/* Desktop: heading left + tagline right | Mobile: center */}
-          <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left gap-3">
+          <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left gap-3 pt-2">
 
             {/* Left — main heading + subheading */}
             <div className="flex flex-col items-center lg:items-start gap-1.5">
@@ -94,20 +94,7 @@ export default function DuasSection() {
               </p>
             </div>
 
-            {/*  — decorative tagline (desktop only) */}
-          
-
           </div>
-
-          {/* Mobile ornament */}
-          <div className="flex lg:hidden items-center justify-center gap-2 mt-3">
-            <span className="h-px w-10 bg-gradient-to-r from-transparent to-emerald-400" />
-            <span className="text-amber-400 text-xs">✦</span>
-            <span className="h-px w-16 bg-gradient-to-r from-emerald-400 via-amber-300 to-emerald-400" />
-            <span className="text-amber-400 text-xs">✦</span>
-            <span className="h-px w-10 bg-gradient-to-l from-transparent to-emerald-400" />
-          </div>
-
         </motion.div>
 
         {/* Cards grid */}
