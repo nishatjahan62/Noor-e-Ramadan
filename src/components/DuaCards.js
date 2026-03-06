@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FiCopy, FiCheck } from "react-icons/fi";
 import { cn } from "@/lib/utils";
 import { t, duas as dc } from "@/data/contents";
 import { useLang } from "@/context/LangContext";
@@ -25,15 +26,26 @@ const categoryConfig = {
   protection:      { icon: "🛡️", badge: "from-secondary to-primary/80"      },
 };
 
-// arabic text  character limit —
 const LONG_THRESHOLD = 100;
 
 export default function DuaCard({ dua, index = 0, defaultOpen = false }) {
-  const { lang }          = useLang();
+  const { lang }              = useLang();
   const [expanded, setExpanded] = useState(defaultOpen);
-  const config            = categoryConfig[dua.category] ?? { icon: "🤲", badge: "from-primary to-secondary/80" };
-  const hasContent        = dua.arabic && dua.arabic.trim() !== "";
-  const isLong            = hasContent && dua.arabic.length > LONG_THRESHOLD;
+  const [copied,   setCopied]   = useState(false);
+
+  const config     = categoryConfig[dua.category] ?? { icon: "🤲", badge: "from-primary to-secondary/80" };
+  const hasContent = dua.arabic && dua.arabic.trim() !== "";
+  const isLong     = hasContent && dua.arabic.length > LONG_THRESHOLD;
+
+  const handleCopy = () => {
+    const lines = [dua.arabic];
+    const translation = t(dua.translation, lang);
+    if (translation) lines.push("\n" + translation);
+    if (dua.reference) lines.push("\n— " + t(dua.reference, lang));
+    navigator.clipboard.writeText(lines.join("\n"));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <motion.div
@@ -46,7 +58,7 @@ export default function DuaCard({ dua, index = 0, defaultOpen = false }) {
     >
       <div className="rounded-[22px] p-5 flex flex-col gap-3 h-full bg-gradient-to-br from-emerald-50/70 to-white dark:bg-none dark:bg-slate-900">
 
-        {/* Badge */}
+        {/* Badge + copy */}
         <div className="flex items-center justify-between">
           <span className={cn(
             "inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-gradient-to-r text-white",
@@ -57,6 +69,39 @@ export default function DuaCard({ dua, index = 0, defaultOpen = false }) {
               {t(dc[dua.category] ?? { en: dua.category, bn: dua.category }, lang)}
             </span>
           </span>
+
+          {hasContent && (
+            <motion.button
+              whileTap={{ scale: 0.85 }}
+              onClick={handleCopy}
+              title={lang === "bn" ? "কপি করুন" : "Copy"}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-primary transition-colors"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {copied ? (
+                  <motion.span
+                    key="check"
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.5, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <FiCheck size={15} className="text-primary" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="copy"
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.5, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <FiCopy size={15} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          )}
         </div>
 
         {/* Title */}
@@ -83,7 +128,6 @@ export default function DuaCard({ dua, index = 0, defaultOpen = false }) {
         {hasContent && (
           <div className="flex flex-col gap-2 pt-3 border-t border-emerald-100/60 dark:border-slate-700/40">
 
-            {/* Arabic — clamp যদি long এবং collapsed */}
             <div className="relative">
               <p
                 className={cn(
@@ -96,13 +140,11 @@ export default function DuaCard({ dua, index = 0, defaultOpen = false }) {
                 {dua.arabic}
               </p>
 
-              {/* Fade overlay — collapsed long card */}
               {isLong && !expanded && (
                 <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
               )}
             </div>
 
-            {/* Translation + reference */}
             <AnimatePresence initial={false}>
               {(!isLong || expanded) && (
                 <motion.div
@@ -130,13 +172,11 @@ export default function DuaCard({ dua, index = 0, defaultOpen = false }) {
               )}
             </AnimatePresence>
 
-            {/* Read more / less button — শুধু long card */}
             {isLong && (
               <button
                 onClick={() => setExpanded(v => !v)}
                 className={cn(
-                  "self-start mt-1 text-[11px] font-semibold transition-colors",
-                  "text-primary hover:text-secondary",
+                  "self-start mt-1 text-[11px] font-semibold transition-colors text-primary hover:text-secondary",
                   lang === "bn" ? "font-bn" : ""
                 )}
               >
