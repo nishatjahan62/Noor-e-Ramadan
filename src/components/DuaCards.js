@@ -1,129 +1,202 @@
 "use client";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiCopy, FiCheck } from "react-icons/fi";
 import { cn } from "@/lib/utils";
 import { t, duas as dc } from "@/data/contents";
-import { duas } from "@/data/duas";
 import { useLang } from "@/context/LangContext";
-import DuaCard from "./DuaCards";
 
-const featured = duas.filter(d => d.featured === true);
+const categoryConfig = {
+  mercy:           { icon: "💚", badge: "from-primary to-primary/80"         },
+  forgiveness:     { icon: "🤲", badge: "from-primary/80 to-secondary/80"    },
+  forgiveness2:    { icon: "🤲", badge: "from-primary/80 to-secondary/80"    },
+  freedom:         { icon: "🌟", badge: "from-secondary to-secondary/80"     },
+  iftar:           { icon: "🌅", badge: "from-secondary to-primary/80"       },
+  sehri:           { icon: "🌙", badge: "from-primary to-primary/80"         },
+  lailatul:        { icon: "✨", badge: "from-secondary/80 to-primary/80"    },
+  tarawih:         { icon: "🕌", badge: "from-primary/80 to-secondary/80"    },
+  tarawih_munajat: { icon: "🕌", badge: "from-primary to-secondary/80"       },
+  tarawih_end:     { icon: "🕌", badge: "from-secondary/80 to-primary/80"    },
+  jumuah:          { icon: "🌿", badge: "from-primary/80 to-secondary/80"    },
+  morning:         { icon: "🌤️", badge: "from-primary to-primary/80"        },
+  evening:         { icon: "🌆", badge: "from-secondary to-secondary/80"     },
+  quran:           { icon: "📖", badge: "from-primary/80 to-secondary/80"    },
+  gratitude:       { icon: "🙏", badge: "from-secondary/80 to-primary/80"    },
+  guidance:        { icon: "🌠", badge: "from-primary to-secondary/80"       },
+  protection:      { icon: "🛡️", badge: "from-secondary to-primary/80"      },
+};
 
-export default function DuasSection() {
-  const { lang } = useLang();
+const LONG_THRESHOLD = 100;
+
+export default function DuaCard({ dua, index = 0, defaultOpen = false }) {
+  const { lang }                = useLang();
+  const [expanded, setExpanded] = useState(defaultOpen);
+  const [copied,   setCopied]   = useState(false);
+
+  const config     = categoryConfig[dua.category] ?? { icon: "🤲", badge: "from-primary to-secondary/80" };
+  const hasContent = dua.arabic && dua.arabic.trim() !== "";
+  const isLong     = hasContent && dua.arabic.length > LONG_THRESHOLD;
+
+  const handleCopy = () => {
+    const lines = [dua.arabic];
+    const translation = t(dua.translation, lang);
+    if (translation) lines.push("\n" + translation);
+    if (dua.reference) lines.push("\n— " + t(dua.reference, lang));
+    navigator.clipboard.writeText(lines.join("\n"));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
-    <section className="pt-8 lg:pt-20 px-4">
-      <div className="mx-auto max-w-5xl">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.06, type: "spring", stiffness: 260, damping: 22 }}
+      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+      className="relative rounded-3xl p-[1.5px]"
+      style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+    >
+      <div className="rounded-[22px] p-5 flex flex-col gap-3 h-full bg-gradient-to-br from-emerald-50/70 to-white dark:bg-none dark:bg-slate-900">
 
-        {/* Heading — desktop:  */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-10"
-        >
-          {/* Top eyebrow — always center */}
-          <div className="flex flex-col items-center justify-center gap-3 mb-4">
-           <div className="flex gap-2 text-xl"> <motion.span
-              animate={{ rotate: 360, scale: [1, 1.2, 1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              className="inline-block text-amber-400 "
-            >✦</motion.span>
-            <p
-              className={cn("text-sm tracking-[0.25em] uppercase font-semibold", lang === "bn" ? "font-bn tracking-normal" : "")}
-              style={{
-                background: "linear-gradient(135deg, #059669 0%, #10b981 50%, #f59e0b 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
+        {/* Badge + copy */}
+        <div className="flex items-center justify-between">
+          <span className={cn(
+            "inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-gradient-to-r text-white",
+            config.badge
+          )}>
+            <span>{config.icon}</span>
+            <span className={lang === "bn" ? "font-bn" : "font-body"}>
+              {t(dc[dua.category] ?? { en: dua.category, bn: dua.category }, lang)}
+            </span>
+          </span>
+
+          {hasContent && (
+            <motion.button
+              whileTap={{ scale: 0.85 }}
+              onClick={handleCopy}
+              title={lang === "bn" ? "কপি করুন" : "Copy"}
+              className="p-1.5 rounded-lg text-gray-400 hover:text-primary transition-colors"
             >
-              {t(dc.eyebrow, lang)}
-            </p>
-        
-            <motion.span
-              animate={{ rotate: -360, scale: [1, 1.2, 1] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-              className="inline-block text-amber-400 "
-            >✦</motion.span></div>
-              <div>   <p
-                className="text-xs font-semibold italic"
-                style={{
-                  background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {lang === "bn"
-                  ? "রমজানের প্রতিটি মুহূর্ত দোয়ায় ভরিয়ে দিন 🌙"
-                  : "Fill every moment of Ramadan with prayer 🌙"
-                }
-              </p></div>
-          </div>
- <div className="flex flex-col items-center justify-center gap-1">
-              <div className="flex items-center justify-center gap-2">
-                <span className="h-px w-8 bg-gradient-to-r from-transparent to-emerald-400" />
-                <span className="text-amber-400 text-xs">✦</span>
-                <span className="h-px w-12 bg-gradient-to-r from-emerald-400 via-amber-300 to-emerald-400" />
-                <span className="text-amber-400 text-xs">✦</span>
-                <span className="h-px w-8 bg-gradient-to-l from-transparent to-emerald-400" />
-            
-              </div>
-             
-            </div>
-
-          {/* Desktop: heading left + tagline right | Mobile: center */}
-          <div className="flex flex-col items-center text-center lg:flex-row lg:items-end lg:justify-between lg:text-left gap-3 pt-2">
-
-            {/* Left — main heading + subheading */}
-            <div className="flex flex-col items-center lg:items-start gap-1.5">
-              <h2
-                className={cn("text-3xl md:text-4xl font-black leading-tight", lang === "bn" ? "font-bn" : "font-heading")}
-                style={{
-                  background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {t(dc.heading, lang)}
-              </h2>
-              <p className={cn("text-sm text-gray-500 dark:text-gray-400", lang === "bn" ? "font-bn" : "")}>
-                {t(dc.subheading, lang)}
-              </p>
-            </div>
-
-          </div>
-        </motion.div>
-
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {featured.map((dua, i) => (
-            <DuaCard key={dua.id} dua={dua} index={i} defaultOpen={true} />
-          ))}
+              <AnimatePresence mode="wait" initial={false}>
+                {copied ? (
+                  <motion.span
+                    key="check"
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.5, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <FiCheck size={15} className="text-primary" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="copy"
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.5, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    <FiCopy size={15} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          )}
         </div>
 
-        {/* View all */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mt-8 text-center"
+        {/* Title */}
+        <h3
+          className={cn("text-base font-black leading-tight", lang === "bn" ? "font-bn" : "font-heading")}
+          style={{
+            background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
         >
-          <Link
-            href="/duas"
-            className={cn(
-              "inline-flex items-center gap-1.5 text-sm font-semibold",
-              "text-primary hover:text-secondary transition-colors hover:underline underline-offset-2",
-              lang === "bn" ? "font-bn" : ""
+          {t(dua.title, lang)}
+        </h3>
+
+        {/* Subtitle */}
+        {dua.subtitle && (
+          <p className={cn("text-xs leading-relaxed text-gray-500 dark:text-gray-400", lang === "bn" ? "font-bn" : "font-body")}>
+            {t(dua.subtitle, lang)}
+          </p>
+        )}
+
+        {/* Arabic + translation */}
+        {hasContent && (
+          <div className="flex flex-col gap-2 pt-3 border-t border-emerald-100/60 dark:border-slate-700/40">
+
+            <div className="relative">
+              <p
+                className={cn(
+                  "text-right leading-loose text-gray-800 dark:text-gray-100 font-arabic",
+                  isLong && !expanded ? "text-base line-clamp-3" : "text-xl"
+                )}
+                dir="rtl"
+              >
+                {dua.arabic}
+              </p>
+
+              {isLong && !expanded && (
+                <div className="absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t from-white dark:from-slate-900 to-transparent" />
+              )}
+            </div>
+
+            <AnimatePresence initial={false}>
+              {(!isLong || expanded) && (
+                <motion.div
+                  key="details"
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.22, ease: "easeInOut" }}
+                  className="overflow-hidden flex flex-col gap-2"
+                >
+                  {dua.translation && t(dua.translation, lang) && (
+                    <p className={cn(
+                      "text-xs leading-relaxed italic text-gray-600 dark:text-gray-300",
+                      lang === "bn" ? "font-bn" : "font-body"
+                    )}>
+                      {t(dua.translation, lang)}
+                    </p>
+                  )}
+                  {dua.reference && t(dua.reference, lang) && (
+                    <span className={cn("text-[10px] font-semibold text-primary/70", lang === "bn" ? "font-bn" : "font-body")}>
+                      📚 {t(dua.reference, lang)}
+                    </span>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {isLong && (
+              <button
+                onClick={() => setExpanded(v => !v)}
+                className={cn(
+                  "self-start mt-1 text-[11px] font-semibold transition-colors text-primary hover:text-secondary",
+                  lang === "bn" ? "font-bn" : "font-body"
+                )}
+              >
+                {expanded
+                  ? (lang === "bn" ? "কম দেখুন ▲" : "Show less ▲")
+                  : (lang === "bn" ? "আরও দেখুন ▼" : "Read more ▼")
+                }
+              </button>
             )}
-          >
-            {t(dc.viewAll, lang)} →
-          </Link>
-        </motion.div>
+
+          </div>
+        )}
+
+        {/* Coming soon */}
+        {!hasContent && (
+          <span className={cn("text-[10px] italic text-gray-400", lang === "bn" ? "font-bn" : "font-body")}>
+            {t(dc.comingSoon, lang)}
+          </span>
+        )}
 
       </div>
-    </section>
+    </motion.div>
   );
 }
