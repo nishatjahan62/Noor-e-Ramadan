@@ -5,5 +5,6 @@ export const navbar = {
   schedule: { en: "Schedule",       bn: "সময়সূচি" },
    duas:        { en: "Duas",           bn: "দোয়া"         },
   openMenu: { en: "Open menu",      bn: "মেনু খুলুন" },
-  langToggle: { en: "বাং",          bn: "EN" }, // shows NEXT lang
+  langToggle: { en: "বাং",          bn: "EN" }, 
+  dashboard: { en: "Dashboard", bn: "ড্যাশবোর্ড" }// shows NEXT lang
 };

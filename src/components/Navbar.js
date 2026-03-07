@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -8,84 +9,19 @@ import { FiSun, FiMenu, FiX } from "react-icons/fi";
 import { PiMoonStarsFill } from "react-icons/pi";
 import { TbLanguage } from "react-icons/tb";
 import { useLang } from "@/context/LangContext";
-import { navbar, t } from "@/data/contents";
 import { useTheme } from "@/context/ThemeContext";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { t, navbar } from "@/data/contents";
+import { IconButton, CrescentMoon, StarSparkle, AnimatedBorderPill } from "@/lib/Helpers/navHelper";
+import UserMenu from "@/components/UserMenu";
 
 const LINKS = [
-  { href: "/",        labelKey: "home"     },
-  { href: "/recipes", labelKey: "recipes"  },
-  { href: "/timings", labelKey: "schedule" },
-  { href: "/duas",    labelKey: "duas"     },
+  { href: "/",          labelKey: "home"      },
+  { href: "/recipes",   labelKey: "recipes"   },
+  { href: "/timings",   labelKey: "schedule"  },
+  { href: "/duas",      labelKey: "duas"      },
+  { href: "/dashboard", labelKey: "dashboard", authOnly: true },
 ];
-
-function IconButton({ children, onClick, ariaLabel, className = "" }) {
-  return (
-    <motion.button
-      onClick={onClick}
-      aria-label={ariaLabel}
-      whileTap={{ scale: 0.9 }}
-      whileHover={{ scale: 1.05 }}
-      className={cn(
-        "relative rounded-xl border px-3 py-2 shadow-sm backdrop-blur-md transition-all duration-200",
-        "border-amber-200/40 bg-white/50 hover:bg-white/70",
-        "dark:border-amber-400/20 dark:bg-slate-800/50 dark:hover:bg-slate-700/60",
-        className
-      )}
-    >
-      {children}
-    </motion.button>
-  );
-}
-
-function CrescentMoon({ size = 22, className = "" }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-    </svg>
-  );
-}
-
-function StarSparkle({ className = "" }) {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className={cn("w-3 h-3", className)}>
-      <path d="M10 1l2.39 6.26L19 9l-5.5 4.74L15.12 21 10 17.27 4.88 21l1.62-7.26L1 9l6.61-1.74L10 1z" />
-    </svg>
-  );
-}
-
-function AnimatedBorderPill({ children, isDark }) {
-  return (
-    <>
-      <style>{`
-        @keyframes gradient-rotate {
-          0%   { background-position: 0% 50%; }
-          50%  { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animated-border-pill {
-          background: linear-gradient(270deg, #059669, #f59e0b, #10b981, #fbbf24, #059669);
-          background-size: 300% 300%;
-          animation: gradient-rotate 3s ease infinite;
-          padding: 1.5px;
-          border-radius: 9999px;
-        }
-      `}</style>
-      <div className="animated-border-pill shadow-xl">
-        <div
-          className="flex items-center gap-1 px-2 py-2 rounded-full backdrop-blur-2xl"
-          style={{
-            background: isDark
-              ? "linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(6,78,59,0.3) 100%)"
-              : "linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(236,253,245,0.88) 50%, rgba(255,251,235,0.92) 100%)",
-          }}
-        >
-          {children}
-        </div>
-      </div>
-    </>
-  );
-}
 
 export default function Navbar() {
   const pathname                = usePathname();
@@ -103,6 +39,7 @@ export default function Navbar() {
   });
 
   const title = t(navbar.brand, lang);
+  const visibleLinks = LINKS.filter(l => !l.authOnly || session);
 
   return (
     <header className="sticky top-0 z-50">
@@ -199,7 +136,7 @@ export default function Navbar() {
                 transition={{ duration: 0.25 }}
                 className="hidden md:flex items-center gap-1"
               >
-                {LINKS.map((l, i) => {
+                {visibleLinks.map((l, i) => {
                   const active = pathname === l.href;
                   const label  = t(navbar[l.labelKey], lang);
                   return (
@@ -254,7 +191,7 @@ export default function Navbar() {
                     <CrescentMoon size={16} className="text-amber-500 dark:text-amber-300" />
                     <StarSparkle className="absolute -top-1 -right-1 text-amber-400 dark:text-amber-300 w-2.5 h-2.5" />
                   </div>
-                  {LINKS.map((l, i) => {
+                  {visibleLinks.map((l, i) => {
                     const active = pathname === l.href;
                     const label  = t(navbar[l.labelKey], lang);
                     return (
@@ -323,28 +260,9 @@ export default function Navbar() {
               </AnimatePresence>
             </IconButton>
 
-            {/* Login / Logout button */}
+            {/* Login / UserMenu */}
             {session ? (
-              <div className="flex items-center gap-2">
-                <span className={cn(
-                  "hidden sm:block text-xs font-semibold text-emerald-600 dark:text-emerald-400 max-w-[80px] truncate",
-                  lang === "bn" ? "font-bn" : "font-body"
-                )}>
-                  {session.user.name}
-                </span>
-                <motion.button
-                  whileTap={{ scale: 0.93 }}
-                  whileHover={{ scale: 1.05 }}
-                  onClick={() => signOut({ callbackUrl: "/" })}
-                  className={cn(
-                    "px-4 py-1.5 rounded-full text-xs font-semibold text-white shadow-md transition-all",
-                    lang === "bn" ? "font-bn" : "font-body"
-                  )}
-                  style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
-                >
-                  {lang === "bn" ? "লগআউট" : "Logout"}
-                </motion.button>
-              </div>
+              <UserMenu session={session} />
             ) : (
               <motion.div whileTap={{ scale: 0.93 }} whileHover={{ scale: 1.05 }}>
                 <Link
@@ -381,7 +299,8 @@ export default function Navbar() {
               }}
             >
               <div className="mb-2 mx-3 h-px rounded-full" style={{ background: "linear-gradient(90deg, transparent, #059669, #f59e0b, transparent)" }} />
-              {LINKS.map((l, i) => {
+
+              {visibleLinks.map((l, i) => {
                 const active = pathname === l.href;
                 const label  = t(navbar[l.labelKey], lang);
                 return (
@@ -411,21 +330,39 @@ export default function Navbar() {
               {/* Mobile login/logout */}
               <div className="mt-2 mx-2 pt-2 border-t border-emerald-100/60 dark:border-slate-700/40">
                 {session ? (
-                  <div className="flex items-center justify-between px-4 py-2">
-                    <span className={cn("text-xs font-semibold text-emerald-600 dark:text-emerald-400 truncate max-w-[120px]", lang === "bn" ? "font-bn" : "font-body")}>
-                      👤 {session.user.name}
-                    </span>
-                    <motion.button
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => { signOut({ callbackUrl: "/" }); setMenuOpen(false); }}
+                  <div className="flex flex-col gap-1 px-2 py-1">
+                    <div className="flex items-center gap-2 px-2 py-1">
+                      <span className="text-base">👤</span>
+                      <div className="flex flex-col">
+                        <span className={cn("text-xs font-bold text-gray-700 dark:text-gray-200 truncate", lang === "bn" ? "font-bn" : "font-body")}>
+                          {session.user.name}
+                        </span>
+                        <span className="text-[10px] text-gray-400 truncate">{session.user.email}</span>
+                      </div>
+                    </div>
+                    <Link
+                      href="/profile"
+                      onClick={() => setMenuOpen(false)}
                       className={cn(
-                        "px-4 py-1.5 rounded-full text-xs font-semibold text-white",
+                        "flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-medium transition-colors",
+                        "text-gray-600 dark:text-gray-300 hover:bg-emerald-50 dark:hover:bg-slate-800 hover:text-primary",
                         lang === "bn" ? "font-bn" : "font-body"
                       )}
-                      style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
                     >
-                      {lang === "bn" ? "লগআউট" : "Logout"}
-                    </motion.button>
+                      <span>👤</span>
+                      <span>{lang === "bn" ? "প্রোফাইল" : "Profile"}</span>
+                    </Link>
+                    <button
+                      onClick={() => { setMenuOpen(false); handleLogout(lang, isDark); }}
+                      className={cn(
+                        "flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-medium transition-colors w-full",
+                        "text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20",
+                        lang === "bn" ? "font-bn" : "font-body"
+                      )}
+                    >
+                      <span>🚪</span>
+                      <span>{lang === "bn" ? "লগআউট" : "Logout"}</span>
+                    </button>
                   </div>
                 ) : (
                   <Link

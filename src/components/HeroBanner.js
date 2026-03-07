@@ -98,7 +98,7 @@ export default function Banner() {
       <div className="absolute inset-0 transition-all duration-500" style={{ background: "var(--banner-overlay)" }} />
 
       <div className="relative z-20 flex min-h-screen flex-col items-center justify-center px-4 py-6">
-        <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full  mx-auto">
 
           {/* Heading */}
           <motion.div

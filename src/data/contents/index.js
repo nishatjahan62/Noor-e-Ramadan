@@ -9,3 +9,5 @@ export { timings } from "./timings";
 export { recipes } from "./recipes";
 export { duas } from "./duas";
 export {footer} from "./footer"
+export {auth} from "./auth"
+
