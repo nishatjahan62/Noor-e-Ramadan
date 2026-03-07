@@ -1,11 +1,13 @@
 // src/app/layout.js
 import Navbar from "@/components/Navbar";
 import "./globals.css";
+import "./provider"
 
 import { Sora, Noto_Sans_Bengali, Cormorant_Garamond, Lateef} from "next/font/google";
 
 import { LangProvider } from "@/context/LangContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import Providers from "./provider";
 
 export const metadata = {
   title: "Noor-E-Ramadan",
@@ -45,12 +47,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${sora.variable} ${notoBengali.variable} ${cormorant.variable} ${lateef.variable}  min-h-screen bg-white text-gray-900 dark:bg-gray-950 dark:text-slate-100 antialiased transition-colors duration-300`}
       >
-       <ThemeProvider>
+      <Providers> <ThemeProvider>
          <LangProvider>
           <Navbar />
           <main>{children}</main>
         </LangProvider>
-       </ThemeProvider>
+       </ThemeProvider></Providers>
       </body>
     </html>
   );

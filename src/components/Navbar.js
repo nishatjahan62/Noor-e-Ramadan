@@ -10,6 +10,7 @@ import { TbLanguage } from "react-icons/tb";
 import { useLang } from "@/context/LangContext";
 import { navbar, t } from "@/data/contents";
 import { useTheme } from "@/context/ThemeContext";
+import { useSession, signOut } from "next-auth/react";
 
 const LINKS = [
   { href: "/",        labelKey: "home"     },
@@ -90,6 +91,7 @@ export default function Navbar() {
   const pathname                = usePathname();
   const { lang, toggle }        = useLang();
   const { isDark, toggleTheme } = useTheme();
+  const { data: session }       = useSession();
   const [compact,  setCompact]  = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -297,6 +299,7 @@ export default function Navbar() {
         {/* RIGHT */}
         <div className="flex-1 flex items-center justify-end gap-2">
           <div className="flex items-center gap-2">
+
             <IconButton className="bg-white/90 dark:bg-black/90" onClick={toggle} ariaLabel="Toggle language">
               <span className="flex items-center gap-1">
                 <TbLanguage size={20} className="text-emerald-600 dark:text-emerald-400" />
@@ -319,6 +322,44 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </IconButton>
+
+            {/* Login / Logout button */}
+            {session ? (
+              <div className="flex items-center gap-2">
+                <span className={cn(
+                  "hidden sm:block text-xs font-semibold text-emerald-600 dark:text-emerald-400 max-w-[80px] truncate",
+                  lang === "bn" ? "font-bn" : "font-body"
+                )}>
+                  {session.user.name}
+                </span>
+                <motion.button
+                  whileTap={{ scale: 0.93 }}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className={cn(
+                    "px-4 py-1.5 rounded-full text-xs font-semibold text-white shadow-md transition-all",
+                    lang === "bn" ? "font-bn" : "font-body"
+                  )}
+                  style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+                >
+                  {lang === "bn" ? "লগআউট" : "Logout"}
+                </motion.button>
+              </div>
+            ) : (
+              <motion.div whileTap={{ scale: 0.93 }} whileHover={{ scale: 1.05 }}>
+                <Link
+                  href="/login"
+                  className={cn(
+                    "block px-4 py-1.5 rounded-full text-xs font-semibold text-white shadow-md transition-all",
+                    lang === "bn" ? "font-bn" : "font-body"
+                  )}
+                  style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+                >
+                  {lang === "bn" ? "লগইন" : "Login"}
+                </Link>
+              </motion.div>
+            )}
+
           </div>
         </div>
       </nav>
@@ -366,6 +407,41 @@ export default function Navbar() {
                   </motion.div>
                 );
               })}
+
+              {/* Mobile login/logout */}
+              <div className="mt-2 mx-2 pt-2 border-t border-emerald-100/60 dark:border-slate-700/40">
+                {session ? (
+                  <div className="flex items-center justify-between px-4 py-2">
+                    <span className={cn("text-xs font-semibold text-emerald-600 dark:text-emerald-400 truncate max-w-[120px]", lang === "bn" ? "font-bn" : "font-body")}>
+                      👤 {session.user.name}
+                    </span>
+                    <motion.button
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => { signOut({ callbackUrl: "/" }); setMenuOpen(false); }}
+                      className={cn(
+                        "px-4 py-1.5 rounded-full text-xs font-semibold text-white",
+                        lang === "bn" ? "font-bn" : "font-body"
+                      )}
+                      style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+                    >
+                      {lang === "bn" ? "লগআউট" : "Logout"}
+                    </motion.button>
+                  </div>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className={cn(
+                      "flex items-center justify-center w-full py-2.5 rounded-2xl text-sm font-semibold text-white",
+                      lang === "bn" ? "font-bn" : "font-body"
+                    )}
+                    style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+                  >
+                    {lang === "bn" ? "লগইন করুন" : "Login"}
+                  </Link>
+                )}
+              </div>
+
             </div>
           </motion.div>
         )}
