@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { t, banner } from "@/data/contents";
 import { useLang } from "@/context/LangContext";
 import RamadanBadge from "@/components/RamadanDayBadge";
 
-// ── Single Dua Card ──────────────────────────
 function DuaCard({ dua, lang }) {
   return (
     <motion.div
@@ -37,10 +36,7 @@ function DuaCard({ dua, lang }) {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.15 }}
         className="text-xl md:text-2xl lg:text-3xl font-bold font-arabic leading-loose text-secondary dark:text-secondary"
-        style={{
-          direction: "rtl",
-          textShadow: "0 0 32px rgba(245,158,11,0.2)",
-        }}
+        style={{ direction: "rtl", textShadow: "0 0 32px rgba(245,158,11,0.2)" }}
       >
         {dua.arabic}
       </motion.p>
@@ -68,7 +64,7 @@ function DuaCard({ dua, lang }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.38 }}
-        className="text-xs rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-primary font-medium"
+        className={`text-xs rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-primary font-medium ${lang === "bn" ? "font-bn" : "font-body"}`}
       >
         📖 {dua.source}
       </motion.span>
@@ -76,14 +72,11 @@ function DuaCard({ dua, lang }) {
   );
 }
 
-// ── MAIN BANNER ──────────────────────────────
 export default function Banner() {
-  const { lang }       = useLang();
-  const shouldReduce   = useReducedMotion();
+  const { lang }     = useLang();
   const [duaIndex, setDuaIndex] = useState(0);
-  const intervalRef    = useRef(null);
-
-  const duas = [banner.sehri, banner.iftar];
+  const intervalRef  = useRef(null);
+  const duas         = [banner.sehri, banner.iftar];
 
   const restartInterval = () => {
     clearInterval(intervalRef.current);
@@ -100,39 +93,24 @@ export default function Banner() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
 
-      {/* ── BG Image ── */}
-      <Image
-        src="/banner.jpg"
-        alt="Ramadan Banner"
-        fill
-        priority
-        className="object-cover object-center"
-      />
+      <Image src="/banner.jpg" alt="Ramadan Banner" fill priority className="object-cover object-center" />
 
-      {/* ── Overlay ── */}
-<div className="absolute inset-0 transition-all duration-500"
-  style={{ background: "var(--banner-overlay)" }}
-/>
-      {/* ══ CONTENT ══ */}
-      <div className="relative z-20 flex min-h-screen flex-col items-center justify-center px-4 py-6 ">
+      <div className="absolute inset-0 transition-all duration-500" style={{ background: "var(--banner-overlay)" }} />
+
+      <div className="relative z-20 flex min-h-screen flex-col items-center justify-center px-4 py-6">
         <div className="w-full max-w-6xl mx-auto">
 
-          {/* ── Heading block ── */}
+          {/* Heading */}
           <motion.div
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="mb-8 flex flex-col items-center gap-2 text-center"
           >
-            {/* Arabic */}
-            <p
-              className="text-2xl font-arabic md:text-4xl font-bold text-secondary"
-             
-            >
+            <p className="text-2xl md:text-4xl font-bold font-arabic text-secondary">
               {t(banner.arabicTitle, lang)}
             </p>
 
-            {/* Main heading */}
             <h1
               className={`text-4xl md:text-6xl lg:text-7xl font-black tracking-tight ${lang === "bn" ? "font-bn" : "font-heading"}`}
               style={{
@@ -150,10 +128,9 @@ export default function Banner() {
             </p>
           </motion.div>
 
-          {/* ── Main grid: Badge + Dua ── */}
+          {/* Badge + Dua grid */}
           <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-6 md:gap-10">
 
-            {/* Badge — left on desktop, top-center on mobile */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -163,18 +140,16 @@ export default function Banner() {
               <RamadanBadge />
             </motion.div>
 
-            {/* Divider — vertical on desktop */}
             <div className="hidden md:block w-px self-stretch bg-gradient-to-b from-transparent via-secondary/30 to-transparent" />
             <div className="block md:hidden w-24 h-px bg-gradient-to-r from-transparent via-secondary/40 to-transparent" />
 
-            {/* Dua section */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
               className="flex-1 w-full max-w-xl"
             >
-              {/* Dot indicators */}
+              {/* Dots */}
               <div className="flex justify-center gap-2 mb-4">
                 {duas.map((_, i) => (
                   <button
@@ -192,18 +167,16 @@ export default function Banner() {
                 ))}
               </div>
 
-              {/* Glass dua card */}
+              {/* Dua card */}
               <div
-                className="relative  rounded-3xl border border-emerald-100 bg-white p-6 md:p-8 shadow-lg dark:bg-slate-900/80 dark:border-secondary/15"
+                className="relative rounded-3xl border border-emerald-100 bg-white p-6 md:p-8 shadow-lg dark:bg-slate-900/80 dark:border-secondary/15"
                 style={{ boxShadow: "0 4px 24px rgba(5,150,105,0.08), 0 1px 8px rgba(0,0,0,0.05)" }}
               >
-                {/* Corner ornaments */}
                 {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map((pos, i) => (
                   <span key={i} className={`absolute ${pos} text-base text-secondary/25`}>
                     {i < 2 ? "❋" : "✿"}
                   </span>
                 ))}
-
                 <AnimatePresence mode="wait">
                   <DuaCard key={duaIndex} dua={duas[duaIndex]} lang={lang} />
                 </AnimatePresence>
@@ -221,7 +194,7 @@ export default function Banner() {
             <motion.div
               animate={{ y: [0, 6, 0] }}
               transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-              className="text-secondary-500 font-bold text-2xl dark:text-secondary-500"
+              className="text-secondary font-bold text-2xl"
             >
               ↓
             </motion.div>
@@ -229,6 +202,7 @@ export default function Banner() {
               {t(banner.scrollHint, lang)}
             </span>
           </motion.div>
+
         </div>
       </div>
     </section>

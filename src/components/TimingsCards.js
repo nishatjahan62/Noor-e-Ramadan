@@ -53,6 +53,7 @@ function AnimatedBorderCard({ children, isToday, className }) {
     </div>
   );
 }
+
 function TimeRow({ emoji, label, time, accent, lang }) {
   return (
     <div className={cn(
@@ -64,14 +65,15 @@ function TimeRow({ emoji, label, time, accent, lang }) {
         <span className={cn(
           "text-xs font-semibold",
           accent ? "text-secondary" : "text-primary",
-          lang === "bn" ? "font-bn" : ""
+          lang === "bn" ? "font-bn" : "font-body"
         )}>
           {label}
         </span>
       </div>
       <span className={cn(
         "text-lg font-black tabular-nums tracking-tight",
-        accent ? "text-secondary" : "text-primary"
+        accent ? "text-secondary" : "text-primary",
+        lang === "bn" ? "font-bn" : "font-body"
       )}>
         {lang === "bn" ? toBn(time) : time}
       </span>
@@ -102,7 +104,7 @@ function TodayCard({ rojaNum, sehri, iftar, lang }) {
 
         <div className="flex flex-col gap-0.5 pr-8">
           <span
-            className={cn("text-base font-black tracking-wide", lang === "bn" ? "font-bn" : "")}
+            className={cn("text-base font-black tracking-wide", lang === "bn" ? "font-bn" : "font-heading")}
             style={{
               background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
               WebkitBackgroundClip: "text",
@@ -112,7 +114,7 @@ function TodayCard({ rojaNum, sehri, iftar, lang }) {
           >
             {t(tc.today, lang)}
           </span>
-          <span className={cn("text-sm font-semibold text-secondary", lang === "bn" ? "font-bn" : "")}>
+          <span className={cn("text-sm font-semibold text-secondary", lang === "bn" ? "font-bn" : "font-body")}>
             {t(tc.roja, lang)} {lang === "bn" ? toBn(rojaNum) : rojaNum}
           </span>
         </div>
@@ -137,10 +139,10 @@ function TomorrowCard({ rojaNum, sehri, iftar, lang }) {
         className="relative rounded-[22px] p-5 flex flex-col gap-3 overflow-hidden cursor-pointer h-full bg-white dark:bg-slate-900"
       >
         <div className="flex flex-col gap-0.5">
-          <span className={cn("text-sm font-black text-gray-500 dark:text-gray-400 tracking-wide", lang === "bn" ? "font-bn" : "")}>
+          <span className={cn("text-sm font-black text-gray-500 dark:text-gray-400 tracking-wide", lang === "bn" ? "font-bn" : "font-heading")}>
             {t(tc.tomorrow, lang)}
           </span>
-          <span className={cn("text-xs text-gray-400", lang === "bn" ? "font-bn" : "")}>
+          <span className={cn("text-xs text-gray-400", lang === "bn" ? "font-bn" : "font-body")}>
             {t(tc.roja, lang)} {lang === "bn" ? toBn(rojaNum) : rojaNum}
           </span>
         </div>
@@ -199,7 +201,7 @@ function SalahCard({ timings, lang }) {
       >
         <div className="flex flex-col gap-0.5">
           <span
-            className={cn("text-base font-black tracking-wide", lang === "bn" ? "font-bn" : "")}
+            className={cn("text-base font-black tracking-wide", lang === "bn" ? "font-bn" : "font-heading")}
             style={{
               background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
               WebkitBackgroundClip: "text",
@@ -209,7 +211,7 @@ function SalahCard({ timings, lang }) {
           >
             {t(tc.namaz, lang)}
           </span>
-          <span className={cn("text-xs text-gray-400", lang === "bn" ? "font-bn" : "")}>
+          <span className={cn("text-xs text-gray-400", lang === "bn" ? "font-bn" : "font-body")}>
             {t(tc.today, lang)}
           </span>
         </div>
@@ -224,13 +226,13 @@ function SalahCard({ timings, lang }) {
                   accent ? "bg-secondary/10 dark:bg-secondary/20" : "bg-primary/5 dark:bg-primary/10"
                 )}
               >
-                <div className="flex items-center flex-col py-2 lg:py-0 lg:flex-row  ">
+                <div className="flex items-center flex-col py-2 lg:py-0 lg:flex-row">
                   <span className="text-base">{emoji}</span>
-                  <span className={cn("text-xs font-semibold", accent ? "text-secondary" : "text-primary", lang === "bn" ? "font-bn" : "")}>
+                  <span className={cn("text-xs font-semibold", accent ? "text-secondary" : "text-primary", lang === "bn" ? "font-bn" : "font-body")}>
                     {label}
                   </span>
                 </div>
-                <span className={cn("text-sm font-black tabular-nums", accent ? "text-secondary" : "text-primary")}>
+                <span className={cn("text-sm font-black tabular-nums", accent ? "text-secondary" : "text-primary", lang === "bn" ? "font-bn" : "font-body")}>
                   {lang === "bn" ? toBn(time) : time}
                 </span>
               </div>
@@ -239,13 +241,13 @@ function SalahCard({ timings, lang }) {
 
           {/* Isha */}
           <div className="flex flex-col items-center lg:flex-row justify-between px-3 py-2.5 rounded-2xl bg-primary/5 dark:bg-primary/10">
-            <div className=" flex items-center flex-col py-2 lg:py-0 lg:flex-row ">
+            <div className="flex items-center flex-col py-2 lg:py-0 lg:flex-row">
               <span className="text-base">🌙</span>
-              <span className={cn("text-xs font-semibold text-primary", lang === "bn" ? "font-bn" : "")}>
+              <span className={cn("text-xs font-semibold text-primary", lang === "bn" ? "font-bn" : "font-body")}>
                 {t(tc.isha, lang)}
               </span>
             </div>
-            <span className="text-sm font-black tabular-nums text-primary">
+            <span className={cn("text-sm font-black tabular-nums text-primary", lang === "bn" ? "font-bn" : "font-body")}>
               {lang === "bn" ? toBn(timings.isha) : timings.isha}
             </span>
           </div>
@@ -273,7 +275,7 @@ function CurrentTimeBadge({ lang }) {
       className="flex flex-col items-center gap-0.5"
     >
       <span
-        className="text-2xl font-black tabular-nums tracking-tight"
+        className={cn("text-2xl font-black tabular-nums tracking-tight", lang === "bn" ? "font-bn" : "font-body")}
         style={{
           background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
           WebkitBackgroundClip: "text",
@@ -283,7 +285,7 @@ function CurrentTimeBadge({ lang }) {
       >
         {lang === "bn" ? toBn(timeStr) : timeStr}
       </span>
-      <span className={cn("text-xs text-gray-500 dark:text-gray-400", lang === "bn" ? "font-bn" : "")}>
+      <span className={cn("text-xs text-gray-500 dark:text-gray-400", lang === "bn" ? "font-bn" : "font-body")}>
         {dateStr}
       </span>
     </motion.div>
@@ -312,7 +314,7 @@ export default function TimingsCards() {
   if (todayIdx === null) {
     return (
       <section className="py-12 px-4 text-center">
-        <p className={cn("text-gray-400 text-sm", lang === "bn" ? "font-bn" : "")}>
+        <p className={cn("text-gray-400 text-sm", lang === "bn" ? "font-bn" : "font-body")}>
           {new Date() < RAMADAN_START ? t(tc.notStarted, lang) : t(tc.ramadanOver, lang)}
         </p>
       </section>
@@ -340,7 +342,7 @@ export default function TimingsCards() {
               className="inline-block text-xl text-amber-400"
             >✦</motion.span>
             <p
-              className={cn("text-lg tracking-[0.25em] uppercase text-center font-semibold", lang === "bn" ? "font-bn tracking-normal" : "")}
+              className={cn("text-lg tracking-[0.25em] uppercase text-center font-semibold", lang === "bn" ? "font-bn tracking-normal" : "font-heading")}
               style={{
                 background: "linear-gradient(135deg, #059669 0%, #10b981 50%, #f59e0b 100%)",
                 WebkitBackgroundClip: "text",
@@ -357,14 +359,14 @@ export default function TimingsCards() {
             >✦</motion.span>
           </div>
 
-          {/* Header — 3 column */}
+          {/* Header — 3 col */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             className="mb-8 grid grid-cols-1 lg:grid-cols-3 items-center gap-4"
           >
             <div className="text-center lg:text-left">
-              <p className={cn("text-xs dark:text-white font-medium mb-1 tracking-widest uppercase ", lang === "bn" ? "font-bn" : "")}>
+              <p className={cn("text-xs dark:text-white font-medium mb-1 tracking-widest uppercase", lang === "bn" ? "font-bn" : "font-body")}>
                 {t(tc.eyebrow, lang)}
               </p>
               <h2
@@ -378,7 +380,7 @@ export default function TimingsCards() {
               >
                 {t(tc.section, lang)}
               </h2>
-              <p className={cn("text-base  text-center lg:text-left text-secondary mt-1.5 flex items-center justify-center lg:justify-normal gap-1", lang === "bn" ? "font-bn" : "")}>
+              <p className={cn("text-base text-center lg:text-left text-secondary mt-1.5 flex items-center justify-center lg:justify-normal gap-1", lang === "bn" ? "font-bn" : "font-body")}>
                 <span>📍</span>
                 <span>{lang === "bn" ? district?.bn : district?.en}</span>
                 <span className="mx-1 text-gray-300">·</span>
@@ -395,14 +397,13 @@ export default function TimingsCards() {
             </div>
           </motion.div>
 
-          {/* Cards + links */}
+          {/* Cards */}
           <motion.div
             key={districtId}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="flex flex-col lg:flex-row items-stretch gap-4 lg:gap-0"
           >
-            {/* Today + Tomorrow group */}
             <div className="flex-[2] flex flex-col gap-2">
               <div className="flex flex-col lg:flex-row gap-4 lg:gap-3 flex-1 items-stretch">
                 <div className="flex-1">
@@ -424,12 +425,11 @@ export default function TimingsCards() {
                   </div>
                 )}
               </div>
-              {/* Sehri & Iftar link */}
               
-               <a href="/timings"
+              <a  href="/timings"
                 className={cn(
                   "text-center text-xs font-semibold py-1.5 text-primary hover:text-secondary transition-colors hover:underline underline-offset-2",
-                  lang === "bn" ? "font-bn" : ""
+                  lang === "bn" ? "font-bn" : "font-body"
                 )}
               >
                 {t(tc.viewAll, lang)} →
@@ -438,23 +438,18 @@ export default function TimingsCards() {
 
             <CenterDivider />
 
-            {/* Namaz card */}
-            <div className="flex-1 flex flex-col gap-2 ">
-              <SalahCard
-                timings={allTimings[todayIdx]}
-                lang={lang}
-              />
+            <div className="flex-1 flex flex-col gap-2">
+              <SalahCard timings={allTimings[todayIdx]} lang={lang} />
               
-              <a  href="/namaz"
+               <a href="/namaz"
                 className={cn(
                   "text-center text-xs font-semibold py-1.5 text-primary hover:text-secondary transition-colors hover:underline underline-offset-2",
-                  lang === "bn" ? "font-bn" : ""
+                  lang === "bn" ? "font-bn" : "font-body"
                 )}
               >
                 {t(tc.viewAllNamaz, lang)} →
               </a>
             </div>
-
           </motion.div>
 
         </div>

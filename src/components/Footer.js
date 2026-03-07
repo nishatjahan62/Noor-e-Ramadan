@@ -9,7 +9,6 @@ const LINKS = [
   { href: "/",        labelKey: "home"     },
   { href: "/recipes", labelKey: "recipes"  },
   { href: "/timings", labelKey: "schedule" },
-  { href: "/namaz",   labelKey: "namaz"    },
   { href: "/duas",    labelKey: "duas"     },
 ];
 
@@ -32,8 +31,8 @@ export default function Footer() {
               key={l.href}
               href={l.href}
               className={cn(
-                "px-3 py-1 text-xs text-gray-400 hover:text-primary transition-colors",
-                lang === "bn" ? "font-bn" : ""
+                "px-3 py-1 text-xs text-primary hover:text-secondary transition-colors",
+                lang === "bn" ? "font-bn" : "font-body"
               )}
             >
               {t(fc[l.labelKey], lang)}
@@ -42,7 +41,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className={cn("flex items-center gap-2 text-[11px] text-gray-400 dark:text-gray-600", lang === "bn" ? "font-bn" : "")}>
+        <div className={cn("flex items-center gap-2 text-[11px] text-gray-600 dark:text-gray-300", lang === "bn" ? "font-bn" : "font-body")}>
           <span>{t(fc.madeBy, lang)}</span>
           <motion.span
             animate={{ scale: [1, 1.3, 1] }}
@@ -51,7 +50,7 @@ export default function Footer() {
           >❤️</motion.span>
           {t(fc.by, lang) && <span>{t(fc.by, lang)}</span>}
           <span
-            className="font-semibold"
+            className="font-semibold font-logo"
             style={{
               background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
               WebkitBackgroundClip: "text",

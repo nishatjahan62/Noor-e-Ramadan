@@ -2,12 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "framer-motion";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { FiSun, FiMenu, FiX } from "react-icons/fi";
 import { PiMoonStarsFill } from "react-icons/pi";
@@ -17,10 +12,10 @@ import { navbar, t } from "@/data/contents";
 import { useTheme } from "@/context/ThemeContext";
 
 const LINKS = [
-  { href: "/",        labelKey: "home"        },
-  { href: "/recipes", labelKey: "recipes"     },
-  { href: "/timings", labelKey: "schedule"    },
-  { href: "/duas",    labelKey: "duas"        },
+  { href: "/",        labelKey: "home"     },
+  { href: "/recipes", labelKey: "recipes"  },
+  { href: "/timings", labelKey: "schedule" },
+  { href: "/duas",    labelKey: "duas"     },
 ];
 
 function IconButton({ children, onClick, ariaLabel, className = "" }) {
@@ -110,15 +105,12 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50">
 
-      {/* Desktop bg — hides on compact */}
       <motion.div
         animate={{ opacity: compact ? 0 : 1 }}
         transition={{ duration: 0.4 }}
         className="absolute inset-0 -z-10 hidden md:block bg-gradient-to-r from-emerald-50/90 via-white/80 to-amber-50/90 dark:from-slate-950/90 dark:via-slate-900/80 dark:to-slate-950/90"
         style={{ backdropFilter: "blur(16px)", pointerEvents: "none" }}
       />
-
-      {/* Mobile bg — always visible */}
       <div
         className="absolute inset-0 -z-10 md:hidden bg-gradient-to-r from-emerald-50/95 via-white/90 to-amber-50/95 dark:from-slate-950/95 dark:via-slate-900/90 dark:to-slate-950/95"
         style={{ backdropFilter: "blur(16px)" }}
@@ -139,8 +131,6 @@ export default function Navbar() {
 
         {/* LEFT */}
         <div className="flex-1 flex items-center gap-2">
-
-          {/* Mobile hamburger */}
           <div className="flex md:hidden">
             <IconButton onClick={() => setMenuOpen(!menuOpen)} ariaLabel={t(navbar.openMenu, lang)}>
               <AnimatePresence mode="wait" initial={false}>
@@ -157,14 +147,11 @@ export default function Navbar() {
             </IconButton>
           </div>
 
-          {/* Desktop logo — hides on compact */}
           <AnimatePresence initial={false}>
             {!compact && (
               <motion.div
                 key="logo-full"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="hidden md:flex items-center gap-3"
               >
@@ -190,7 +177,6 @@ export default function Navbar() {
             )}
           </AnimatePresence>
 
-          {/* Mobile logo — always visible */}
           <div className="flex md:hidden items-center">
             <Link href="/">
               <div className="relative flex h-9 w-9 items-center justify-center rounded-xl shadow-sm ring-1 ring-amber-300/40 bg-gradient-to-br from-emerald-500/10 to-amber-400/10 dark:from-emerald-900/40 dark:to-amber-900/30">
@@ -199,20 +185,15 @@ export default function Navbar() {
               </div>
             </Link>
           </div>
-
         </div>
 
         {/* CENTER */}
         <div className="flex items-center justify-center">
-
-          {/* Desktop links — normal */}
           <AnimatePresence initial={false}>
             {!compact && (
               <motion.div
                 key="center-links"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.25 }}
                 className="hidden md:flex items-center gap-1"
               >
@@ -256,7 +237,6 @@ export default function Navbar() {
             )}
           </AnimatePresence>
 
-          {/* Desktop compact pill */}
           <AnimatePresence>
             {compact && (
               <motion.div
@@ -278,11 +258,9 @@ export default function Navbar() {
                     return (
                       <motion.div
                         key={l.href}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }}
                         transition={{ delay: i * 0.05 + 0.1 }}
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.92 }}
+                        whileHover={{ y: -2 }} whileTap={{ scale: 0.92 }}
                       >
                         <Link
                           href={l.href}
@@ -314,7 +292,6 @@ export default function Navbar() {
               </motion.div>
             )}
           </AnimatePresence>
-
         </div>
 
         {/* RIGHT */}
@@ -323,7 +300,7 @@ export default function Navbar() {
             <IconButton className="bg-white/90 dark:bg-black/90" onClick={toggle} ariaLabel="Toggle language">
               <span className="flex items-center gap-1">
                 <TbLanguage size={20} className="text-emerald-600 dark:text-emerald-400" />
-                <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 sm:inline">
+                <span className={cn("text-xs font-semibold text-emerald-700 dark:text-emerald-300 sm:inline", lang === "bn" ? "font-bn" : "font-body")}>
                   {t(navbar.langToggle, lang)}
                 </span>
               </span>
@@ -344,24 +321,18 @@ export default function Navbar() {
             </IconButton>
           </div>
         </div>
-
       </nav>
 
       {/* MOBILE DROPDOWN */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22, ease: "easeInOut" }}
             className="md:hidden overflow-hidden"
           >
             <div
-              className={cn(
-                "mx-3 mb-3 rounded-3xl p-2 shadow-xl ring-1 backdrop-blur-2xl",
-                isDark ? "bg-slate-900/95 ring-emerald-500/20" : "bg-white/95 ring-emerald-300/30"
-              )}
+              className={cn("mx-3 mb-3 rounded-3xl p-2 shadow-xl ring-1 backdrop-blur-2xl", isDark ? "bg-slate-900/95 ring-emerald-500/20" : "bg-white/95 ring-emerald-300/30")}
               style={{
                 background: isDark
                   ? "linear-gradient(135deg, rgba(15,23,42,0.97) 0%, rgba(6,78,59,0.15) 100%)"
@@ -399,7 +370,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </header>
   );
 }
