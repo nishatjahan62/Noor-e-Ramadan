@@ -1,3 +1,4 @@
+
 export default function DashboardLoading() {
   return (
     <main className="min-h-screen px-4 sm:px-8 md:px-16 py-10 max-w-5xl mx-auto flex flex-col gap-8">

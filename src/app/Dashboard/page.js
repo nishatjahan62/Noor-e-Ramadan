@@ -7,6 +7,9 @@ import DashboardClient from "./components/DashboardClient";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
+  
+  console.log("DASHBOARD SESSION:", session); // debug
+  
   if (!session) redirect("/login");
   return <DashboardClient session={session} />;
 }
