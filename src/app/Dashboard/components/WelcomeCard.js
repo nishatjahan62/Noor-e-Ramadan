@@ -3,13 +3,15 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { t } from "@/data/contents";
 
-export default function WelcomeCard({ session, lang }) {
+function getGreeting() {
   const hour = new Date().getHours();
-  const greeting = hour < 12
-    ? { en: "Good Morning",   bn: "শুভ সকাল"   }
-    : hour < 17
-    ? { en: "Good Afternoon", bn: "শুভ বিকেল"  }
-    : { en: "Good Evening",   bn: "শুভ সন্ধ্যা" };
+  return hour < 12 ? { en: "Good Morning",   bn: "শুভ সকাল"   }
+       : hour < 17 ? { en: "Good Afternoon", bn: "শুভ বিকেল"  }
+       :             { en: "Good Evening",   bn: "শুভ সন্ধ্যা" };
+}
+
+export default function WelcomeCard({ session, lang }) {
+  const greeting = getGreeting();
 
   return (
     <motion.div
