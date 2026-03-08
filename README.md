@@ -66,59 +66,6 @@
 | Icons | React Icons |
 | Deployment | Vercel |
 
----
-
-## 📁 Project Structure
-
-```
-src/
-├── app/
-│   ├── (auth)/
-│   │   ├── login/
-│   │   └── register/
-│   ├── api/
-│   │   ├── auth/[...nextauth]/
-│   │   ├── bookmarks/
-│   │   ├── goals/
-│   │   └── register/
-│   ├── dashboard/
-│   │   └── components/
-│   ├── duas/
-│   ├── namaz/
-│   ├── profile/
-│   │   └── components/
-│   ├── recipes/
-│   │   └── [id]/
-│   ├── timings/
-│   └── page.js
-├── components/
-│   ├── Banner.js
-│   ├── DuaCard.js
-│   ├── DuasSection.js
-│   ├── Footer.js
-│   ├── Navbar.js
-│   ├── RecipeCard.js
-│   ├── RecipeDetail.js
-│   ├── TimingsCards.js
-│   └── UserMenu.js
-├── context/
-│   ├── LangContext.js
-│   └── ThemeContext.js
-├── data/
-│   ├── contents.js
-│   ├── districts.js
-│   ├── duas.js
-│   ├── recipes.js
-│   └── timings.js
-└── lib/
-    ├── mongodb.js
-    ├── useBookmark.js
-    ├── useCurrentTime.js
-    ├── useLogout.js
-    └── utils.js
-```
-
----
 
 ## 🚀 Getting Started
 
@@ -128,52 +75,6 @@ src/
 - MongoDB Atlas account
 - npm or yarn
 
-### Installation
-
-**1. Clone the repository**
-```bash
-git clone https://github.com/yourusername/noor-e-ramadan.git
-cd noor-e-ramadan
-```
-
-**2. Install dependencies**
-```bash
-npm install
-```
-
-**3. Set up environment variables**
-
-`.env.local` ফাইল তৈরি করুন:
-```env
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/noor-e-ramadan?retryWrites=true&w=majority
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-key-here
-```
-
-**4. Run the development server**
-```bash
-npm run dev
-```
-
-[http://localhost:3000](http://localhost:3000) এ খুলুন।
-
----
-
-## 🌍 Deployment (Vercel)
-
-**1.** Vercel এ project deploy করুন
-
-**2.** Settings → Environment Variables এ এগুলো add করুন:
-
-| Variable | Value |
-|---|---|
-| `MONGODB_URI` | Your MongoDB Atlas URI |
-| `NEXTAUTH_URL` | `https://your-app.vercel.app` |
-| `NEXTAUTH_SECRET` | Your secret key |
-
-**3.** Redeploy করুন — ব্যস!
-
----
 
 ## 📸 Screenshots
 
@@ -183,25 +84,7 @@ npm run dev
 
 ---
 
-## 🤝 Contributing
 
-Pull requests welcome! বড় কোনো change এর জন্য আগে issue খুলুন।
-
-```bash
-# Fork করুন
-git checkout -b feature/amazing-feature
-git commit -m "Add amazing feature"
-git push origin feature/amazing-feature
-# Pull Request খুলুন
-```
-
----
-
-## 📄 License
-
-MIT License — দেখুন [LICENSE](LICENSE) ফাইল।
-
----
 
 ## 🙏 Credits
 
