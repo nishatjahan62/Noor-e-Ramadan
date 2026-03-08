@@ -1,18 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { t } from "@/data/contents";
-
-function getGreeting() {
-  const hour = new Date().getHours();
-  return hour < 12 ? { en: "Good Morning",   bn: "শুভ সকাল"   }
-       : hour < 17 ? { en: "Good Afternoon", bn: "শুভ বিকেল"  }
-       :             { en: "Good Evening",   bn: "শুভ সন্ধ্যা" };
-}
-
 export default function WelcomeCard({ session, lang }) {
-  const greeting = getGreeting();
-
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,9 +13,6 @@ export default function WelcomeCard({ session, lang }) {
     >
       <div className="rounded-[22px] px-6 py-5 bg-white dark:bg-slate-900 flex items-center justify-between">
         <div className="flex flex-col gap-1">
-          <span className={cn("text-sm text-gray-400", lang === "bn" ? "font-bn" : "font-body")}>
-            {t(greeting, lang)} 👋
-          </span>
           <h1
             className={cn("text-2xl font-black", lang === "bn" ? "font-bn" : "font-heading")}
             style={{
