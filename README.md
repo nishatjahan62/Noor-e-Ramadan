@@ -2,18 +2,16 @@
 
 <div align="center">
 
-![Noor-e-Ramadan Banner](public/banner.jpg)
+![Noor-e-Ramadan Banner](public/bannerForReadme.png)
 
-**A full-stack Ramadan companion app built with Next.js 15**  
-বাংলা ও ইংরেজিতে রমজানের সব তথ্য এক জায়গায়
+**A full-stack Ramadan companion app built with Next.js 15**
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer-Motion-purple?style=flat-square&logo=framer)](https://www.framer.com/motion/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
 
-[🌐 Live Demo](https://noor-e-ramadan-tau.vercel.app) · [🐛 Report Bug](https://github.com/yourusername/noor-e-ramadan/issues) · [✨ Request Feature](https://github.com/yourusername/noor-e-ramadan/issues)
+[🌐 Live Demo](https://noor-e-ramadan-tau.vercel.app) · [🐛 Report Bug](https://github.com/nishatjahan62/noor-e-ramadan/issues) · [✨ Request Feature](https://github.com/nishatjahan62/noor-e-ramadan/issues)
 
 </div>
 
@@ -22,26 +20,26 @@
 ## ✨ Features
 
 ### 🕌 Ramadan Essentials
-- **Sehri & Iftar Timings** — সব ৬৪ জেলার সেহরি ও ইফতারের সময়সূচি
-- **Full Ramadan Schedule** — ৩০ রোজার সম্পূর্ণ তালিকা
-- **Salah Timings** — ফজর, যোহর, আসর, মাগরিব, ইশার সময়
+- **Sehri & Iftar Timings** — All 64 districts of Bangladesh
+- **Full Ramadan Schedule** — Complete 30-day timetable
+- **Salah Timings** — Fajr, Dhuhr, Asr, Maghrib, Isha
 
 ### 🤲 Duas Collection
-- **১৭+ দোয়া** — রমজানের বিশেষ দোয়াসমূহ
-- Arabic text, বাংলা অনুবাদ ও রেফারেন্স সহ
-- Copy to clipboard, Expand/Collapse long duas
+- **17+ Duas** — Special duas for Ramadan
+- Arabic text with Bengali & English translation and references
+- Copy to clipboard, Expand/Collapse for long duas
 
 ### 🍽️ Recipes
-- **২৮টি রেসিপি** — ইফতার, সেহরি, ড্রিংকস ও উভয় ক্যাটাগরি
-- Prep time, description ও step-by-step instructions
+- **28 Recipes** — Iftar, Sehri, Drinks and both categories
+- Prep time, description and step-by-step instructions
 
 ### 👤 User Features (Auth Required)
-- **Dashboard** — আজকের Goals checklist with progress tracker
-- **Bookmarks** — দোয়া ও রেসিপি বুকমার্ক করুন
-- **Profile** — Stats দেখুন (Goals, Bookmarks)
+- **Dashboard** — Daily Goals checklist with progress tracker
+- **Bookmarks** — Save duas and recipes for later
+- **Profile** — View your stats (Goals, Bookmarks)
 
 ### 🌐 Bilingual Support
-- সম্পূর্ণ **বাংলা ও ইংরেজি** ভাষা সাপোর্ট
+- Full **Bengali & English** language support
 - One-click language toggle
 
 ### 🎨 UI/UX
@@ -61,30 +59,66 @@
 | Animation | Framer Motion |
 | Database | MongoDB Atlas |
 | Auth | NextAuth.js v4 |
-| Password | bcryptjs |
+| Password Hashing | bcryptjs |
 | Alerts | SweetAlert2 |
 | Icons | React Icons |
 | Deployment | Vercel |
 
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
 - Node.js 18+
 - MongoDB Atlas account
 - npm or yarn
 
+### Installation
 
-## 📸 Screenshots
+**1. Clone the repository**
+```bash
+git clone https://github.com/yourusername/noor-e-ramadan.git
+cd noor-e-ramadan
+```
 
-| Home | Dashboard | Duas |
-|---|---|---|
-| ![Home](screenshots/home.png) | ![Dashboard](screenshots/dashboard.png) | ![Duas](screenshots/duas.png) |
+**2. Install dependencies**
+```bash
+npm install
+```
+
+**3. Set up environment variables**
+
+Create a `.env.local` file:
+```env
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/noor-e-ramadan?retryWrites=true&w=majority
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key-here
+```
+
+**4. Run the development server**
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+## 🌍 Deployment (Vercel)
 
+**1.** Deploy the project on Vercel
+
+**2.** Go to Settings → Environment Variables and add:
+
+| Variable | Value |
+|---|---|
+| `MONGODB_URI` | Your MongoDB Atlas URI |
+| `NEXTAUTH_URL` | `https://your-app.vercel.app` |
+| `NEXTAUTH_SECRET` | Your secret key |
+
+**3.** Redeploy — done!
+
+---
 
 ## 🙏 Credits
 
@@ -100,7 +134,5 @@
 **রমজান মোবারক 🌙**
 
 Made with ❤️ for the Muslim community of Bangladesh
-
-⭐ Star this repo if you found it helpful!
 
 </div>
