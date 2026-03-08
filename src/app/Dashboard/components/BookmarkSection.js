@@ -3,20 +3,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { t } from "@/data/contents";
+import { t, user as uc } from "@/data/contents";
 import { duas } from "@/data/duas";
 import { recipes } from "@/data/recipes";
-
-const LABELS = {
-  title:   { en: "Bookmarks",                              bn: "বুকমার্ক"                           },
-  duas:    { en: "Duas",                                   bn: "দোয়া"                               },
-  recipes: { en: "Recipes",                                bn: "রেসিপি"                              },
-  emptyD:  { en: "No duas bookmarked yet.",                bn: "কোনো দোয়া বুকমার্ক নেই।"            },
-  emptyR:  { en: "No recipes bookmarked yet.",             bn: "কোনো রেসিপি বুকমার্ক নেই।"          },
-  go:      { en: "Go to Duas →",                           bn: "দোয়া পেজে যান →"                    },
-  goR:     { en: "Go to Recipes →",                        bn: "রেসিপি পেজে যান →"                  },
-  remove:  { en: "Remove",                                 bn: "সরান"                               },
-};
 
 const TABS = ["duas", "recipes"];
 
@@ -34,17 +23,15 @@ export default function BookmarksSection({ lang }) {
 
   const removeBookmark = async (itemId, type) => {
     await fetch("/api/bookmarks", {
-      method:  "POST",
-      headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify({ itemId, type }),
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ itemId, type }),
     });
     setBookmarks(prev => prev.filter(b => !(b.itemId === itemId && b.type === type)));
   };
 
   const duaBookmarks    = bookmarks.filter(b => b.type === "dua");
   const recipeBookmarks = bookmarks.filter(b => b.type === "recipe");
-
-  const currentList = tab === "duas" ? duaBookmarks : recipeBookmarks;
+  const currentList     = tab === "duas" ? duaBookmarks : recipeBookmarks;
 
   return (
     <motion.div
@@ -66,34 +53,42 @@ export default function BookmarksSection({ lang }) {
             backgroundClip: "text",
           }}
         >
-          🔖 {t(LABELS.title, lang)}
+          🔖 {t(uc.bookmarks, lang)}
         </h2>
 
         {/* Tabs */}
         <div className="flex gap-2">
-          {TABS.map(key => (
-            <button
-              key={key}
-              onClick={() => setTab(key)}
-              className={cn(
-                "px-4 py-1.5 rounded-full text-xs font-semibold transition-all",
-                lang === "bn" ? "font-bn" : "font-body",
-                tab === key
-                  ? "text-white"
-                  : "text-gray-400 bg-gray-100 dark:bg-slate-800 hover:text-primary"
-              )}
-              style={tab === key ? {
-                background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))"
-              } : {}}
-            >
-              {t(LABELS[key], lang)}
-              {tab === key && bookmarks.filter(b => b.type === (key === "duas" ? "dua" : "recipe")).length > 0 && (
-                <span className="ml-1.5 bg-white/30 rounded-full px-1.5 py-0.5 text-[10px]">
-                  {bookmarks.filter(b => b.type === (key === "duas" ? "dua" : "recipe")).length}
-                </span>
-              )}
-            </button>
-          ))}
+          {TABS.map(key => {
+            const count = bookmarks.filter(b =>
+              b.type === (key === "duas" ? "dua" : "recipe")
+            ).length;
+            return (
+              <button
+                key={key}
+                onClick={() => setTab(key)}
+                className={cn(
+                  "flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold transition-all",
+                  lang === "bn" ? "font-bn" : "font-body",
+                  tab === key
+                    ? "text-white"
+                    : "text-gray-400 bg-gray-100 dark:bg-slate-800 hover:text-primary"
+                )}
+                style={tab === key ? {
+                  background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))"
+                } : {}}
+              >
+                {t(uc[key], lang)}
+                {count > 0 && (
+                  <span className={cn(
+                    "rounded-full px-1.5 py-0.5 text-[10px] font-bold",
+                    tab === key ? "bg-white/30 text-white" : "bg-primary/10 text-primary"
+                  )}>
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {/* Content */}
@@ -115,7 +110,7 @@ export default function BookmarksSection({ lang }) {
             ) : currentList.length === 0 ? (
               <div className="flex flex-col items-center gap-3 py-6">
                 <p className={cn("text-xs text-gray-400 text-center", lang === "bn" ? "font-bn" : "font-body")}>
-                  {tab === "duas" ? t(LABELS.emptyD, lang) : t(LABELS.emptyR, lang)}
+                  {tab === "duas" ? t(uc.emptyDuas, lang) : t(uc.emptyRecipes, lang)}
                 </p>
                 <Link
                   href={tab === "duas" ? "/duas" : "/recipes"}
@@ -124,7 +119,7 @@ export default function BookmarksSection({ lang }) {
                     lang === "bn" ? "font-bn" : "font-body"
                   )}
                 >
-                  {tab === "duas" ? t(LABELS.go, lang) : t(LABELS.goR, lang)}
+                  {tab === "duas" ? t(uc.goDuasLink, lang) : t(uc.goRecipesLink, lang)}
                 </Link>
               </div>
             ) : (
@@ -134,7 +129,6 @@ export default function BookmarksSection({ lang }) {
                     const item = tab === "duas"
                       ? duas.find(d => d.id === bookmark.itemId)
                       : recipes.find(r => r.id === bookmark.itemId);
-
                     if (!item) return null;
 
                     return (
@@ -171,7 +165,7 @@ export default function BookmarksSection({ lang }) {
                             lang === "bn" ? "font-bn" : "font-body"
                           )}
                         >
-                          {t(LABELS.remove, lang)}
+                          {t(uc.remove, lang)}
                         </motion.button>
                       </motion.li>
                     );

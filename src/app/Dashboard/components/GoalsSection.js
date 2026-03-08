@@ -2,20 +2,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { t } from "@/data/contents";
+import { t, user as uc } from "@/data/contents";
 
-const LABELS = {
-  title:       { en: "Today's Goals",      bn: "আজকের লক্ষ্য"         },
-  placeholder: { en: "Add a new goal...",  bn: "নতুন লক্ষ্য লিখুন..."  },
-  add:         { en: "Add",                bn: "যোগ করুন"              },
-  empty:       { en: "No goals yet. Add one!", bn: "কোনো লক্ষ্য নেই। যোগ করুন!" },
-  done:        { en: "completed",          bn: "টি সম্পন্ন"             },
-};
-
-export default function GoalsSection({ lang, session }) {
-  const [goals,  setGoals] = useState([]);
-  const [input,  setInput] = useState("");
-  const [loading, setLoad] = useState(true);
+export default function GoalsSection({ lang }) {
+  const [goals,   setGoals] = useState([]);
+  const [input,   setInput] = useState("");
+  const [loading, setLoad]  = useState(true);
 
   useEffect(() => {
     fetch("/api/goals")
@@ -29,8 +21,7 @@ export default function GoalsSection({ lang, session }) {
     if (!text) return;
     setInput("");
     const res  = await fetch("/api/goals", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
     });
     const data = await res.json();
@@ -39,8 +30,7 @@ export default function GoalsSection({ lang, session }) {
 
   const toggleGoal = async (id) => {
     const res  = await fetch("/api/goals", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      method: "PATCH", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
     const data = await res.json();
@@ -49,8 +39,7 @@ export default function GoalsSection({ lang, session }) {
 
   const deleteGoal = async (id) => {
     const res  = await fetch("/api/goals", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      method: "DELETE", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
     const data = await res.json();
@@ -67,7 +56,7 @@ export default function GoalsSection({ lang, session }) {
       className="rounded-3xl p-[1.5px] h-full"
       style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
     >
-      <div className="rounded-[22px] h-full px-6 py-5 bg-white dark:bg-slate-900 flex flex-col gap-4">
+      <div className="rounded-[22px] px-6 py-5 bg-white dark:bg-slate-900 flex flex-col gap-4 h-full">
 
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -81,11 +70,11 @@ export default function GoalsSection({ lang, session }) {
                 backgroundClip: "text",
               }}
             >
-              🎯 {t(LABELS.title, lang)}
+              🎯 {t(uc.goalsTitle, lang)}
             </h2>
             {goals.length > 0 && (
               <span className={cn("text-[11px] text-gray-400", lang === "bn" ? "font-bn" : "font-body")}>
-                {doneCount}/{goals.length} {t(LABELS.done, lang)}
+                {doneCount}/{goals.length} {t(uc.done, lang)}
               </span>
             )}
           </div>
@@ -97,12 +86,12 @@ export default function GoalsSection({ lang, session }) {
                 <circle cx="18" cy="18" r="15" fill="none" stroke="#e5e7eb" strokeWidth="3" />
                 <circle
                   cx="18" cy="18" r="15" fill="none"
-                  stroke="url(#grad)" strokeWidth="3"
+                  stroke="url(#goalGrad)" strokeWidth="3"
                   strokeDasharray={`${Math.round((doneCount / goals.length) * 94)} 94`}
                   strokeLinecap="round"
                 />
                 <defs>
-                  <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <linearGradient id="goalGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                     <stop offset="0%" stopColor="var(--color-primary)" />
                     <stop offset="100%" stopColor="var(--color-secondary)" />
                   </linearGradient>
@@ -121,7 +110,7 @@ export default function GoalsSection({ lang, session }) {
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === "Enter" && addGoal()}
-            placeholder={t(LABELS.placeholder, lang)}
+            placeholder={t(uc.placeholder, lang)}
             className={cn(
               "flex-1 rounded-xl border border-primary/30 dark:border-slate-700 px-3 py-2 text-sm outline-none",
               "bg-emerald-50/50 dark:bg-slate-800 text-gray-700 dark:text-gray-200",
@@ -132,13 +121,10 @@ export default function GoalsSection({ lang, session }) {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={addGoal}
-            className={cn(
-              "px-4 py-2 rounded-xl text-xs font-bold text-white shrink-0",
-              lang === "bn" ? "font-bn" : "font-body"
-            )}
+            className={cn("px-4 py-2 rounded-xl text-xs font-bold text-white shrink-0", lang === "bn" ? "font-bn" : "font-body")}
             style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
           >
-            {t(LABELS.add, lang)}
+            {t(uc.add, lang)}
           </motion.button>
         </div>
 
@@ -151,7 +137,7 @@ export default function GoalsSection({ lang, session }) {
           </div>
         ) : goals.length === 0 ? (
           <p className={cn("text-center text-xs text-gray-400 py-4", lang === "bn" ? "font-bn" : "font-body")}>
-            {t(LABELS.empty, lang)}
+            {t(uc.empty, lang)}
           </p>
         ) : (
           <ul className="flex flex-col gap-2">
@@ -196,9 +182,7 @@ export default function GoalsSection({ lang, session }) {
                     whileTap={{ scale: 0.85 }}
                     onClick={() => deleteGoal(goal._id)}
                     className="text-gray-300 hover:text-red-400 dark:text-slate-600 dark:hover:text-red-400 transition-colors text-xs"
-                  >
-                    ✕
-                  </motion.button>
+                  >✕</motion.button>
                 </motion.li>
               ))}
             </AnimatePresence>
