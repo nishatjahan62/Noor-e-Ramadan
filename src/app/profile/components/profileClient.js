@@ -61,18 +61,21 @@ export default function ProfileClient({ session }) {
   const initials = session.user.name
     ?.split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2) ?? "U";
 
-  return (
-    <main className="min-h-screen px-4 sm:px-8 md:px-16 py-10 max-w-2xl mx-auto flex flex-col gap-6">
+ return (
+  <main className="min-h-screen px-4 sm:px-8 md:px-16 py-10 max-w-2xl mx-auto flex flex-col gap-6">
 
-      {/* Profile card */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        className="rounded-3xl p-[1.5px]"
-        style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
-      >
-        <div className="rounded-[22px] px-6 py-6 bg-white dark:bg-slate-900 flex items-center gap-5">
+    {/* Profile card */}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 260, damping: 22 }}
+      className="rounded-3xl p-[1.5px]"
+      style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
+    >
+      <div className="rounded-[22px] px-6 py-6 bg-white dark:bg-slate-900 flex flex-col gap-6">
+
+        {/* Avatar + name */}
+        <div className="flex items-center gap-5">
           <div
             className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-white text-xl font-black shadow-md"
             style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
@@ -100,19 +103,20 @@ export default function ProfileClient({ session }) {
             </span>
           </div>
         </div>
-      </motion.div>
 
-      {/* Stats */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.05 }}
-        className="rounded-3xl p-[1.5px]"
-        style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
-      >
-        <div className="rounded-[22px] px-6 py-5 bg-white dark:bg-slate-900 flex flex-col gap-4">
+        {/* Divider */}
+   <div className="flex items-center justify-center gap-2 mt-1">
+  <span className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-emerald-400" />
+  <span className="text-amber-400 text-xs">✦</span>
+  <span className="h-px w-16 sm:w-24 bg-gradient-to-r from-emerald-400 via-amber-300 to-emerald-400" />
+  <span className="text-amber-400 text-xs">✦</span>
+  <span className="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-emerald-400" />
+</div>
+
+        {/* Stats */}
+        <div className="flex flex-col gap-3">
           <h2
-            className={cn("text-base font-black", lang === "bn" ? "font-bn" : "font-heading")}
+            className={cn("text-sm font-black", lang === "bn" ? "font-bn" : "font-heading")}
             style={{
               background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
               WebkitBackgroundClip: "text",
@@ -137,19 +141,20 @@ export default function ProfileClient({ session }) {
             </div>
           )}
         </div>
-      </motion.div>
 
-      {/* Quick links */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22, delay: 0.1 }}
-        className="rounded-3xl p-[1.5px]"
-        style={{ background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))" }}
-      >
-        <div className="rounded-[22px] px-6 py-5 bg-white dark:bg-slate-900 flex flex-col gap-4">
+        {/* Divider */}
+       <div className="flex items-center justify-center gap-2 mt-1">
+  <span className="h-px w-10 sm:w-16 bg-gradient-to-r from-transparent to-emerald-400" />
+  <span className="text-amber-400 text-xs">✦</span>
+  <span className="h-px w-16 sm:w-24 bg-gradient-to-r from-emerald-400 via-amber-300 to-emerald-400" />
+  <span className="text-amber-400 text-xs">✦</span>
+  <span className="h-px w-10 sm:w-16 bg-gradient-to-l from-transparent to-emerald-400" />
+</div>
+
+        {/* Quick links */}
+        <div className="flex flex-col gap-3">
           <h2
-            className={cn("text-base font-black", lang === "bn" ? "font-bn" : "font-heading")}
+            className={cn("text-sm font-black", lang === "bn" ? "font-bn" : "font-heading")}
             style={{
               background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
               WebkitBackgroundClip: "text",
@@ -182,8 +187,10 @@ export default function ProfileClient({ session }) {
             ))}
           </div>
         </div>
-      </motion.div>
 
-    </main>
-  );
+      </div>
+    </motion.div>
+
+  </main>
+);
 }

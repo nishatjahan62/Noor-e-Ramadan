@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { t, banner } from "@/data/contents";
+import { duas } from "@/data/duas";
 import { useLang } from "@/context/LangContext";
 import RamadanBadge from "@/components/RamadanDayBadge";
 
@@ -49,39 +50,43 @@ function DuaCard({ dua, lang }) {
         className="h-px w-24 rounded-full bg-gradient-to-r from-transparent via-secondary/50 to-transparent"
       />
 
-      {/* Meaning */}
+      {/* Translation */}
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
         className={`text-sm md:text-base leading-relaxed max-w-md text-primary/80 dark:text-primary/70 ${lang === "bn" ? "font-bn" : "font-body"}`}
       >
-        {t(dua.meaning, lang)}
+        {t(dua.translation, lang)}
       </motion.p>
 
-      {/* Source */}
+      {/* Reference */}
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.38 }}
         className={`text-xs rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-primary font-medium ${lang === "bn" ? "font-bn" : "font-body"}`}
       >
-        📖 {dua.source}
+        📖 {t(dua.reference, lang)}
       </motion.span>
     </motion.div>
   );
 }
 
 export default function Banner() {
-  const { lang }     = useLang();
+  const { lang }                = useLang();
   const [duaIndex, setDuaIndex] = useState(0);
-  const intervalRef  = useRef(null);
-  const duas         = [banner.sehri, banner.iftar];
+  const intervalRef             = useRef(null);
+
+  const duaList = [
+    duas.find(d => d.id === "du05"), // sehri
+    duas.find(d => d.id === "du04"), // iftar
+  ];
 
   const restartInterval = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      setDuaIndex(i => (i + 1) % duas.length);
+      setDuaIndex(i => (i + 1) % duaList.length);
     }, 6000);
   };
 
@@ -98,7 +103,7 @@ export default function Banner() {
       <div className="absolute inset-0 transition-all duration-500" style={{ background: "var(--banner-overlay)" }} />
 
       <div className="relative z-20 flex min-h-screen flex-col items-center justify-center px-4 py-6">
-        <div className="w-full  mx-auto">
+        <div className="w-full mx-auto">
 
           {/* Heading */}
           <motion.div
@@ -151,7 +156,7 @@ export default function Banner() {
             >
               {/* Dots */}
               <div className="flex justify-center gap-2 mb-4">
-                {duas.map((_, i) => (
+                {duaList.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => { setDuaIndex(i); restartInterval(); }}
@@ -178,7 +183,7 @@ export default function Banner() {
                   </span>
                 ))}
                 <AnimatePresence mode="wait">
-                  <DuaCard key={duaIndex} dua={duas[duaIndex]} lang={lang} />
+                  <DuaCard key={duaIndex} dua={duaList[duaIndex]} lang={lang} />
                 </AnimatePresence>
               </div>
             </motion.div>
