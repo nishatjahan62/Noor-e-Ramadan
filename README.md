@@ -11,7 +11,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer-Motion-purple?style=flat-square&logo=framer)](https://www.framer.com/motion/)
 
-[🌐 Live Demo](https://noor-e-ramadan-tau.vercel.app) · [🐛 Report Bug](https://github.com/nishatjahan62/noor-e-ramadan/issues) · [✨ Request Feature](https://github.com/nishatjahan62/noor-e-ramadan/issues)
+[🌐 Live Demo](https://noor-e-ramadan-vert.vercel.app/) · [🐛 Report Bug](https://github.com/nishatjahan62/noor-e-ramadan/issues) · [✨ Request Feature](https://github.com/nishatjahan62/noor-e-ramadan/issues)
 
 </div>
 
@@ -77,7 +77,7 @@
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/yourusername/noor-e-ramadan.git
+git clone https://github.com/nishatjahan62/noor-e-ramadan.git
 cd noor-e-ramadan
 ```
 
@@ -113,7 +113,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | Variable | Value |
 |---|---|
 | `MONGODB_URI` | Your MongoDB Atlas URI |
-| `NEXTAUTH_URL` | `https://your-app.vercel.app` |
+| `NEXTAUTH_URL` | `https://noor-e-ramadan-vert.vercel.app/` |
 | `NEXTAUTH_SECRET` | Your secret key |
 
 **3.** Redeploy — done!
