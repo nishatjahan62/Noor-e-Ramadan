@@ -166,24 +166,24 @@ export default function ProfileClient({ session }) {
           </h2>
           <div className="flex flex-wrap gap-2">
             {[
-              { href: "/dashboard", label: uc.goDashboard, icon: "📊" },
+              { href: "/hub", label: uc.goDashboard, icon: "📊" },
               { href: "/duas",      label: uc.goDuas,      icon: "🤲" },
               { href: "/recipes",   label: uc.goRecipes,   icon: "🍽️" },
             ].map(({ href, label, icon }) => (
-              <Link
-                key={href}
-                href={href}
-                className={cn(
-                  "flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all",
-                  "bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:text-white",
-                  lang === "bn" ? "font-bn" : "font-body"
-                )}
-                onMouseEnter={e => e.currentTarget.style.background = "linear-gradient(135deg, var(--color-primary), var(--color-secondary))"}
-                onMouseLeave={e => e.currentTarget.style.background = ""}
-              >
-                <span>{icon}</span>
-                <span>{t(label, lang)}</span>
-              </Link>
+             <Link
+  key={href}
+  href={href}
+  className={cn(
+    "flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold transition-all",
+    "bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 hover:text-white",
+    lang === "bn" ? "font-bn" : "font-body"
+  )}
+  onMouseEnter={e => e.currentTarget.style.background = "linear-gradient(135deg, var(--color-primary), var(--color-secondary))"}
+  onMouseLeave={e => e.currentTarget.style.background = ""}
+>
+  <span className="text-sm sm:text-base">{icon}</span>
+  <span>{t(label, lang)}</span>
+</Link>
             ))}
           </div>
         </div>

@@ -50,13 +50,7 @@ export default function Footer() {
           >❤️</motion.span>
           {t(fc.by, lang) && <span>{t(fc.by, lang)}</span>}
           <span
-            className="font-semibold font-logo"
-            style={{
-              background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
+            className="font-semibold font-logo "
           >
             Nishat Jahan
           </span>
