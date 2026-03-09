@@ -122,7 +122,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🙏 Credits
 
-- **Design & Development** — [Your Name](https://github.com/yourusername)
+- **Design & Development** — [Nishat Jahan](https://github.com/nishatjahan62)
 - **Special Thanks** — Nishat Jahan ❤️
 - Ramadan timings data — [Aladhan API](https://aladhan.com/)
 - Arabic fonts — Google Fonts (Amiri)
