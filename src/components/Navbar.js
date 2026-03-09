@@ -20,7 +20,7 @@ const LINKS = [
   { href: "/recipes",   labelKey: "recipes"   },
   { href: "/timings",   labelKey: "schedule"  },
   { href: "/duas",      labelKey: "duas"      },
-  { href: "/dashboard", labelKey: "dashboard"},
+  { href: "/goals", labelKey: "dashboard"},
 ];
 
 export default function Navbar() {
