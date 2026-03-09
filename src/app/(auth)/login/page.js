@@ -50,8 +50,8 @@ export default function LoginPage() {
     } else {
   await Swal.fire({
     icon:               "success",
-    title:              t(ac.welcomeTitle, lang),
-    text:               t(ac.accountCreated, lang),
+    title:              t(ac.welcomeBack, lang),
+    text:               t(ac.loggedIn, lang),
     timer:              1500,
     showConfirmButton:  false,
     background:         isDark ? "#0f172a" : "#ffffff",

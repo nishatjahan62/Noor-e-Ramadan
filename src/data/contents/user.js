@@ -27,7 +27,7 @@ export const user = {
     en: "No recipes bookmarked yet.",
     bn: "কোনো রেসিপি বুকমার্ক নেই।",
   },
-  goDuas: { en: "Go to Duas →", bn: "দোয়া পেজে যান →" },
-  goRecipes: { en: "Go to Recipes →", bn: "রেসিপি পেজে যান →" },
+  goDuas: { en: "Duas →", bn: "দোয়া →" },
+  goRecipes: { en: "Recipes →", bn: "রেসিপি  →" },
   remove: { en: "Remove", bn: "সরান" },
 };
